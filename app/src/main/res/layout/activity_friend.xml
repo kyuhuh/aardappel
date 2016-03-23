@@ -10,9 +10,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="START"
-        android:id="@+id/start"
-        android:onClick="onClickMain"
+        android:text="Play with your friends"
+        android:id="@+id/friendgame"
+        android:onClick="onClickStart"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="152dp" />
@@ -20,20 +20,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CURRENT GAME"
-        android:id="@+id/currentgame"
-        android:onClick="onClickMain"
+        android:text="Play random game"
+        android:id="@+id/randomgame"
         android:layout_alignTop="@+id/start"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="61dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SETTINGS"
-        android:id="@+id/settings"
-        android:onClick="onClickMain"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 </LinearLayout>
