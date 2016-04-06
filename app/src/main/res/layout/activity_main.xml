@@ -6,11 +6,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="START"
+        android:text="@string/start_button"
         android:id="@+id/start"
         android:onClick="onClickMain"
         android:layout_alignParentBottom="true"
@@ -20,7 +19,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CURRENT GAME"
+        android:text="@string/current_button"
         android:id="@+id/currentgame"
         android:onClick="onClickMain"
         android:layout_alignTop="@+id/start"
@@ -30,10 +29,23 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SETTINGS"
+        android:text="@string/settings_button"
         android:id="@+id/settings"
         android:onClick="onClickMain"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/status"
+        android:text="Not started"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="140dp" />
+
+
 </LinearLayout>
