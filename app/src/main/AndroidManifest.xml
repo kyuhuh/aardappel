@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".StartActivity"></activity>
-        <activity android:name=".Account.Account_Activity"></activity>
+        <activity android:name=".Account_Activity"></activity>
     </application>
 
 </manifest>
