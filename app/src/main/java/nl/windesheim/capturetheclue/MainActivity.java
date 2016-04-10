@@ -1,5 +1,6 @@
 package nl.windesheim.capturetheclue;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import nl.windesheim.capturetheclue.Account.User;
 import nl.windesheim.capturetheclue.Connection.Server;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         userNameDisplay.setText(username);
 
         // Test connection to Server, currently disabled because it takes a long time when the server is down.
-        //new Server().testConnection();
+        new Server().testConnection();
         if (username == "not_found") {
             //
             Intent myIntent = new Intent(MainActivity.this, Account_Activity.class);
@@ -58,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.settings:
+                //
+                break;
+
+            case R.id.logoutButton:
 
                 Context c = this;
                 settings = c.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -65,9 +69,19 @@ public class MainActivity extends AppCompatActivity {
 
                 editor.clear();
                 editor.commit();
+                loggedIn = false;
+
                 Intent myIntent = new Intent(MainActivity.this, Account_Activity.class);
                 //myIntent.putExtra("key", value); //Optional parameters
                 MainActivity.this.startActivity(myIntent);
+                break;
+
+            case R.id.openPrefsDialogButton:
+                Dialog d = new Dialog(this);
+                d.setTitle("Saved Preferences");
+                d.setContentView(R.layout.activity_friend);
+                d.show();
+                break;
 
 
         }

@@ -57,8 +57,35 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_weight="1"
+        android:layout_weight="0.27"
         android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.82"
+        android:weightSum="1">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Prefs"
+            android:onClick="onClickMain"
+            android:id="@+id/openPrefsDialogButton"
+            android:layout_weight=".5"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log out"
+            android:onClick="onClickMain"
+            android:id="@+id/logoutButton"
+            android:layout_weight=".5"/>
+    </LinearLayout>
 
 
 </LinearLayout>
