@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     public static String serverStatus = "";
     public static TextView tv;
     public static TextView userNameDisplay;
-    public static ProgressDialog pD;
     public static boolean loggedIn = false;
     public static final String PREFS_NAME = "prefs";
     SharedPreferences settings;

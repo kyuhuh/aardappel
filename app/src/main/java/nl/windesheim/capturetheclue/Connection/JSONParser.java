@@ -107,7 +107,7 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
         StringBuilder result = new StringBuilder();
         String status = null;
         String error = null;
-        JSONObject json;
+        JSONObject json = new JSONObject();
 
         // Try to connect to the server, if it doesnt set status accordingly.
         try {
@@ -126,7 +126,7 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
                     "application/x-www-form-urlencoded");
 
             //urlConnection.setRequestProperty("Content-Length", "" +
-                    //Integer.toString(params.));
+            //Integer.toString(params.));
             urlConnection.setRequestProperty("Content-Language", "en-US");
 
             urlConnection.setUseCaches(false);
@@ -159,68 +159,38 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
             rd.close();
 
             Log.d("RESPONSE", response.toString());
-                try {
-                    json = new JSONObject(response.toString());
-                } catch (JSONException j) {
-                    json = null;
-                    Log.d("ERROR", "Couldnt parse JSON. Is it valid?");
-                }
+            Log.d("DEBUG", "Trying to parse response to JSON");
+
+            try {
+                json = new JSONObject(response.toString());
+            } catch (JSONException j) {
+                error = "Could not parse JSON, " + j.getMessage();
+                Log.d("ERROR", "Couldnt parse JSON. Is it valid?");
+            }
             //return response.toString();
 
-            } catch (Exception e) {
+        } catch (Exception e) {
+            error = "Could not connect to server: " + e.getMessage();
+            e.printStackTrace();
 
-                e.printStackTrace();
-                return null;
+        } finally {
 
-            } finally {
-
-                if(urlConnection != null) {
-                    urlConnection.disconnect();
-                }
+            if (urlConnection != null) {
+                urlConnection.disconnect();
             }
-
-
-
-            /*InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            OutputStream os = urlConnection.getOutputStream();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-
-            writer.write(Server.getQuery(params));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            Log.d("RESULT", result.toString());
-
-        }catch( Exception e) {
-            Log.d("ERROR", e.getMessage());
-            status = "Not responding";
-            error = e.getMessage();
-        }
-        finally {
-            urlConnection.disconnect();
         }
 
-        // Convert results of request to a JSONObject.
+        // Check if any errors where encountered.
         String JSONresult;
         if(error != null) {
             JSONresult = "{ \"status\" : \" " + status + " \"}";
+            try {
+                json = new JSONObject(JSONresult.toString());
+            } catch (JSONException j) {
+                error = "Could not convert error message to JSON Object, " + j.getMessage();
+                Log.d("ERROR", "Error parsing JSON Object");
+            }
         }
-        else {
-            JSONresult = result.toString();
-        }
-
-        // Try to convert our result to a JSONObject to return
-        try {
-            json = new JSONObject(JSONresult);
-        } catch (JSONException j) {
-            json = null;
-            Log.d("ERROR", "Couldnt parse JSON. Is it valid?");
-        }*/
 
         return json;
     }

@@ -1,6 +1,9 @@
 package nl.windesheim.capturetheclue.Connection;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.Settings;
 import android.util.Log;
 import android.util.Pair;
 
@@ -46,6 +49,10 @@ public class Server {
                     Log.d("DEBUG", user.getString("token"));
                     User u = new User(user.getString("username"), user.getString("token"));
                     Account_Activity.handleLogin(u);
+                } else if (user.getString("status").contentEquals("User does not exist.")) {
+                    Account_Activity.showPopup("Username does not exist. Did you type it correctly?");
+                } else if (user.getString("status").contentEquals("Passwords do not match.")) {
+                    Account_Activity.showPopup("Passwords do not match.");
                 }
                 else
                 {
