@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.GridView;
@@ -46,7 +47,10 @@ public class TestMatchActivity extends AppCompatActivity {
 
         for (String c : letters) {
             nButton = new TextView(this);
-            nButton.setText("[" + c + "] ");
+            nButton.setText(c);
+            nButton.setBackgroundResource(R.drawable.button);
+            nButton.setWidth(10);
+            nButton.setHeight(10);
             GL.addView(nButton);
         }
 
