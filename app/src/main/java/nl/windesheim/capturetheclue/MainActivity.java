@@ -10,13 +10,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import nl.windesheim.capturetheclue.Connection.Server;
+import nl.windesheim.capturetheclue.Models.Match;
 
 public class MainActivity extends AppCompatActivity {
 
     public static String serverStatus = "";
     public static TextView tv;
+    public static Context mContext;
     public static TextView userNameDisplay;
     public static boolean loggedIn = false;
     public static final String PREFS_NAME = "prefs";
@@ -27,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv = (TextView) findViewById(R.id.status);
+        mContext = this;
         tv.setText(serverStatus);
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         userNameDisplay = (TextView) findViewById(R.id.userNameDisplay);
@@ -45,6 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public static void showPopup(String text) {
+        Log.d("Debug", "Showing popup");
+        Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
+    }
+
+
+
     public void onClickMain(View view) {
         switch (view.getId())
         {
@@ -54,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.currentgame:
                 //
+                Log.d("DEBUG", "Clicked current game");
+                new Server().getMatch(1);
+
                 break;
 
             case R.id.settings:

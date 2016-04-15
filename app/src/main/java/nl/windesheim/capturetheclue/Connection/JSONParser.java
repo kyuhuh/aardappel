@@ -1,8 +1,12 @@
 package nl.windesheim.capturetheclue.Connection;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,12 +19,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import nl.windesheim.capturetheclue.MainActivity;
+import nl.windesheim.capturetheclue.TestMatchActivity;
 
 /**
  * Created by Peter on 4/6/2016.
@@ -86,7 +92,6 @@ public class JSONParser extends AsyncTask<String, String, JSONObject> {
         Server.setResult(json);
 
     }
-
 }
 
 class DoLogin extends AsyncTask<String, String, JSONObject> {
@@ -209,3 +214,150 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
 
     }
 }
+
+class retrieveMatch extends AsyncTask<String, String, JSONObject> {
+
+    HttpURLConnection urlConnection;
+    private int id;
+
+    public retrieveMatch(int i) {
+        id = i;
+    }
+
+    @Override
+    protected JSONObject doInBackground(String... args) {
+
+        Log.d("DEBUG", "Trying to get match...");
+        StringBuilder result = new StringBuilder();
+        String status = null;
+        String error = null;
+        JSONObject json = new JSONObject();
+
+        // Try to connect to the server, if it doesnt set status accordingly.
+        try {
+
+            // Connection part
+            URL url = new URL(Server.SERVER_URL + "/match.php");
+            urlConnection = (HttpURLConnection) url.openConnection();
+            Log.d("Debug", url.toString());
+
+            /*List<Pair> params = new ArrayList<Pair>();
+            params.add(new Pair("user", pass));
+            params.add(new Pair("pass", mail));*/
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            //urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+
+            //urlConnection.setRequestProperty("Content-Length", "" +
+            //Integer.toString(params.));
+            //urlConnection.setRequestProperty("Content-Language", "en-US");
+
+            urlConnection.setUseCaches(false);
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+
+            // For debug purposes
+            /*for(Pair p : params)
+            {
+                Log.d("PAIR", p.first + " and " + p.second);
+            }*/
+
+            //Send request
+            DataOutputStream wr = new DataOutputStream(
+                    urlConnection.getOutputStream());
+            //wr.writeBytes (Server.getQuery(params));
+            wr.flush();
+            wr.close();
+
+            // Response part
+
+            InputStream is = urlConnection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            String line;
+            StringBuffer response = new StringBuffer();
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+            }
+            rd.close();
+
+            try {
+                json = new JSONObject(response.toString());
+            } catch (JSONException j) {
+                error = "Could not parse JSON, " + j.getMessage();
+                Log.d("ERROR", "Couldnt parse JSON. Is it valid?");
+            }
+            //return response.toString();
+
+        } catch (Exception e) {
+            error = "Could not connect to server: " + e.getMessage();
+            e.printStackTrace();
+
+        } finally {
+
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+
+        // Check if any errors where encountered.
+        String JSONresult;
+        if (error != null) {
+            JSONresult = "{ \"status\" : \" " + status + " \"}";
+            try {
+                json = new JSONObject(JSONresult.toString());
+            } catch (JSONException j) {
+                error = "Could not convert error message to JSON Object, " + j.getMessage();
+                Log.d("ERROR", "Error parsing JSON Object");
+            }
+        }
+
+        return json;
+    }
+
+    protected void onPostExecute(JSONObject json) {
+
+        Log.d("DEBUG", json.toString());
+        //Do something with the JSON string
+        if (json != null) {
+            try {
+                Server.returnMatch(json);
+
+            } catch (JSONException e) {
+
+                Log.d("ERROR", e.getMessage());
+            }
+        }
+
+    }
+}
+
+class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    ImageView bmImage;
+
+    public DownloadImageTask(ImageView bmImage) {
+        this.bmImage = bmImage;
+    }
+
+    protected Bitmap doInBackground(String... urls) {
+        String urldisplay = urls[0];
+        Bitmap mIcon11 = null;
+        try {
+            InputStream in = new java.net.URL(urldisplay).openStream();
+            mIcon11 = BitmapFactory.decodeStream(in);
+        } catch (ConnectException ce) {
+            TestMatchActivity.showPopup("Not connected! (" + ce.getMessage() + ")");
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
+        return mIcon11;
+    }
+
+    protected void onPostExecute(Bitmap result) {
+        bmImage.setImageBitmap(result);
+    }
+}
+

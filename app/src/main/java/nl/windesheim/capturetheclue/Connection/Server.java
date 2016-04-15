@@ -1,12 +1,19 @@
 package nl.windesheim.capturetheclue.Connection;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.ImageView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,14 +22,20 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import nl.windesheim.capturetheclue.Account.User;
 import nl.windesheim.capturetheclue.Account_Activity;
 import nl.windesheim.capturetheclue.MainActivity;
+import nl.windesheim.capturetheclue.Models.Match;
+import nl.windesheim.capturetheclue.Models.Picture;
+import nl.windesheim.capturetheclue.TestMatchActivity;
 
 /**
  * Created by Peter on 4/6/2016.
@@ -38,6 +51,11 @@ public class Server {
 
     public void testLogin(String p, String w) {
         new DoLogin(p,w).execute();
+    }
+
+    public void getMatch(int id) {
+        Log.d("Debug", "Retrieving match in server");
+        new retrieveMatch(id).execute();
     }
 
     public static void setLoginCredentials(JSONObject user) throws JSONException {
@@ -74,6 +92,29 @@ public class Server {
         }
     }
 
+    public static void returnMatch(JSONObject response) throws JSONException {
+        if (response != null) {
+
+            if (response.getString("status").contentEquals("OK")) {
+
+                Log.d("DEBUG", "Status is ok");
+                Log.d("DEBUG", "Response is: " + response.toString());
+                // Parse the server response into a Match object
+
+                Match m = new Gson().fromJson(response.toString(), Match.class);
+                TestMatchActivity.startMatch(m);
+                Intent inent = new Intent(MainActivity.mContext, TestMatchActivity.class);
+                MainActivity.mContext.startActivity(inent);
+            } else if (response.getString("status").contentEquals("Match not found.")) {
+                Log.d("DEBUG", "Match not found");
+                // Do something useful here
+            }
+        } else {
+            throw new JSONException("Data couldnt be retrieved");
+        }
+
+    }
+
     public static String getQuery(List<Pair> params) throws UnsupportedEncodingException
     {
         StringBuilder result = new StringBuilder();
@@ -92,5 +133,11 @@ public class Server {
         }
 
         return result.toString();
+    }
+
+    public static void downloadImage(ImageView iv, Picture p) {
+        String url = Server.SERVER_URL + "/pictures/" + p.getFileurl();
+        new DownloadImageTask(iv)
+                .execute(url);
     }
 }

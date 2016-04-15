@@ -18,8 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartActivity"></activity>
-        <activity android:name=".Account_Activity"></activity>
+        <activity android:name=".StartActivity" />
+        <activity android:name=".Account_Activity" />
+        <activity android:name=".TestMatchActivity"></activity>
     </application>
 
 </manifest>
