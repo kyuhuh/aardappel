@@ -10,7 +10,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play with your friends"
+        android:text="@string/play_friend_button"
         android:id="@+id/friendgame"
         android:onClick="onClickStart"
         android:layout_alignParentBottom="true"
@@ -20,7 +20,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play random game"
+        android:text="@string/play_random_button"
         android:id="@+id/randomgame"
         android:layout_alignTop="@+id/start"
         android:layout_centerHorizontal="true"

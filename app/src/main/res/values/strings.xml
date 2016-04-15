@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CaptureTheClue</string>
+    <string name="start_button">START</string>
+    <string name="current_button">CURRENT GAME</string>
+    <string name="settings_button">SETTINGS</string>
+    <string name="play_friend_button">Play with your friends</string>
+    <string name="play_random_button">Play random game</string>
+    <string name="login_button">Log in</string>
+    <string name="loginButton">Login</string>
 </resources>

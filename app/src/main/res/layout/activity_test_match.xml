@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="nl.windesheim.capturetheclue.TestMatchActivity"
+    android:contextClickable="false"
+    android:gravity="center_horizontal"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Guess the word!"
+        android:id="@+id/wordTextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="142dp">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/image1View"
+            android:layout_below="@+id/wordTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="96dp"
+            android:layout_alignParentLeft="false"
+            android:layout_weight="0.5"
+            android:src="@drawable/buttonhint"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:onClick="onClickMain"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/image2View"
+            android:layout_below="@+id/wordTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="96dp"
+            android:layout_alignParentLeft="false"
+            android:layout_weight="0.5"
+            android:src="@drawable/buttonhint"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:onClick="onClickMain" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="152dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/image3View"
+            android:layout_below="@+id/wordTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="96dp"
+            android:layout_alignParentLeft="false"
+            android:src="@drawable/buttonhint"
+            android:layout_weight="0.5"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:onClick="onClickMain" />
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/gridLetterView"
+        android:columnCount="9"
+        android:rowCount="2"></GridLayout>
+
+
+</LinearLayout>
