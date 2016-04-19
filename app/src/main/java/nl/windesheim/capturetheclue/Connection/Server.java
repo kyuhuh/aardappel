@@ -58,12 +58,12 @@ public class Server {
         new retrieveMatch(id).execute();
     }
 
-    public static void setLoginCredentials(JSONObject user) throws JSONException {
+    public static void setLoginCredentials(JSONObject user) {
 
-            if(user != null)
-            {
+        try {
+            if (user != null) {
                 Log.d("DUMP", user.getString("status"));
-                if(user.getString("status").contentEquals("OK")) {
+                if (user.getString("status").contentEquals("OK")) {
                     Log.d("DEBUG", user.getString("token"));
                     User u = new User(user.getString("username"), user.getString("token"));
                     Account_Activity.handleLogin(u);
@@ -71,16 +71,16 @@ public class Server {
                     Account_Activity.showPopup("Username does not exist. Did you type it correctly?");
                 } else if (user.getString("status").contentEquals("Passwords do not match.")) {
                     Account_Activity.showPopup("Passwords do not match.");
-                }
-                else
-                {
+                } else {
                     throw new JSONException("Data is corrupted");
                 }
-            }
-            else
-            {
+            } else {
                 throw new JSONException("Data couldnt be retrieved");
             }
+        } catch (JSONException je) {
+            Account_Activity.showPopup("Could not log in, server didn't respond on time. Please try again later.");
+        }
+        Account_Activity.progDia.hide();
         }
 
     public static void setResult(JSONObject j){
