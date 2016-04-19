@@ -204,12 +204,7 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
 
         //Do something with the JSON string
         if(json != null) {
-            try {
                 Server.setLoginCredentials(json);
-
-            } catch (JSONException e) {
-                Log.d("ERROR", e.getMessage());
-            }
         }
 
     }

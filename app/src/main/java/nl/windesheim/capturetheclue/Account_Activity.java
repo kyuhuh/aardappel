@@ -23,10 +23,12 @@ public class Account_Activity extends AppCompatActivity {
     String email;
     EditText passText;
     String pass;
+    public static ProgressDialog progDia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progDia = new ProgressDialog(this);
         setContentView(R.layout.activity_account);
         mContext = this;
     }
@@ -39,6 +41,9 @@ public class Account_Activity extends AppCompatActivity {
     public void onClickMain(View view) {
         switch (view.getId()) {
             case R.id.loginButton:
+
+                progDia.setMessage("Trying to log in");
+                progDia.show();
 
                 // Get login params
                 emailText = (EditText) findViewById(R.id.emailBox);
@@ -66,7 +71,6 @@ public class Account_Activity extends AppCompatActivity {
         user.storeData(mContext);
         String userName = user.username;
         MainActivity.userNameDisplay.setText(userName);
-        //MainActivity.pD.dismiss();
         MainActivity.loggedIn = true;
 
     }

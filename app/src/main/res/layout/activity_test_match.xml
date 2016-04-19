@@ -83,7 +83,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:id="@+id/gridLetterView"
-        android:columnCount="9"
+        android:columnCount="7"
         android:rowCount="2"></GridLayout>
 
 
