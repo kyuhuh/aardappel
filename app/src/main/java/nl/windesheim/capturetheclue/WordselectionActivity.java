@@ -10,8 +10,4 @@ public class WordselectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wordselection);
     }
-
-    //link word DB
-    //show three random words
-
 }
