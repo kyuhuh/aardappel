@@ -72,6 +72,7 @@ public class Account_Activity extends AppCompatActivity {
         String userName = user.username;
         MainActivity.userNameDisplay.setText(userName);
         MainActivity.loggedIn = true;
+        
 
     }
 }

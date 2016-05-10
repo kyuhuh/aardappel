@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="200dp"
+    android:minHeight="100dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/message"
+        android:layout_gravity="center_horizontal" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultImage"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/ok_button"
+        android:layout_gravity="center_horizontal|bottom"
+        android:singleLine="false"
+        android:textStyle="italic"
+        android:typeface="monospace"
+        android:background="#f39c59"
+        android:textColor="#ffffff"
+        android:ellipsize="middle"
+        android:focusableInTouchMode="true" />
+</LinearLayout>

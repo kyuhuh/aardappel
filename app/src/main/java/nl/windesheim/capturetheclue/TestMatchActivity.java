@@ -1,58 +1,102 @@
 package nl.windesheim.capturetheclue;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsoluteLayout;
-import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import nl.windesheim.capturetheclue.Connection.JSONParser;
 import nl.windesheim.capturetheclue.Connection.Server;
+import nl.windesheim.capturetheclue.Models.ClueDialog;
 import nl.windesheim.capturetheclue.Models.Match;
 import nl.windesheim.capturetheclue.Models.Picture;
 import nl.windesheim.capturetheclue.Util.WordManager;
 
-public class TestMatchActivity extends AppCompatActivity {
+public class TestMatchActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static Match currentMatch;
     private static ImageView image1, image2, image3;
     public static Context mContext;
+    ArrayList<TextView> alphabet;
+    ArrayList<TextView> input;
+    String inputString = "";
 
     private boolean image1loaded = false, image2loaded = false, image3loaded = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_match);
         mContext = this;
-        TextView wordView = (TextView) findViewById(R.id.wordTextView);
+        TextView nButton;
+        Typeface Roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
+
+        GridLayout GLinput = (GridLayout) findViewById(R.id.gridLetterInputView);
         //wordView.setText(currentMatch.getWord());
 
+        // The WordManager generates extra letters etc
         WordManager wm = new WordManager();
-        List<String> letters = wm.getWordLetters(currentMatch.getWord(), 14);
 
+        // Retrieve the word from match
+        String word = currentMatch.getWord();
+
+        // Populate the grid with empty squares to fill in
+        List<String> letters = wm.getWordLetters(word, word.length());
+
+
+        input = new ArrayList<TextView>();
+
+
+        int i = 0;
+        for (String c : letters) {
+            nButton = new TextView(this);
+            nButton.setText(" ");
+            nButton.setTypeface(Roboto);
+            nButton.setTextColor(Color.WHITE);
+            nButton.setId(i);
+            i++;
+            Log.d("Debug", "Id is " + i);
+            nButton.setOnClickListener(this);
+            nButton.setBackgroundResource(R.drawable.button);
+            nButton.setLayoutParams(new ViewGroup.LayoutParams(40, 40));
+            nButton.setGravity(Gravity.CENTER);
+            GLinput.addView(nButton);
+            input.add(nButton);
+        }
+
+
+        // Get some extra letters for filler
+        letters = wm.getWordLetters(currentMatch.getWord(), 14);
+        // Populate the grid with empty squares to fill in
         GridLayout GL = (GridLayout) findViewById(R.id.gridLetterView);
-
-        TextView nButton;
+        alphabet = new ArrayList<TextView>();
 
         for (String c : letters) {
             nButton = new TextView(this);
-            nButton.setText(c);
+            nButton.setText(c.toUpperCase());
+            nButton.setTypeface(Roboto);
+            nButton.setTextColor(Color.WHITE);
+            nButton.setId(i);
+            i++;
+            Log.d("Debug", "Id is " + i);
+            nButton.setOnClickListener(this);
             nButton.setBackgroundResource(R.drawable.button);
-            nButton.setLayoutParams(new ViewGroup.LayoutParams(50, 50));
+            nButton.setLayoutParams(new ViewGroup.LayoutParams(40, 40));
+            nButton.setGravity(Gravity.CENTER);
+            alphabet.add(nButton);
             GL.addView(nButton);
         }
 
@@ -65,7 +109,59 @@ public class TestMatchActivity extends AppCompatActivity {
         new Server().downloadImage(image1, pic1);
         // todo: Find a better place to do this check!
         image1loaded = true;
+    }
 
+    public void updateInput(String s) {
+
+        if (inputString.length() == currentMatch.getWord().length()) {
+            Log.d("Debug", "Vol");
+        } else {
+            inputString += s;
+            input.get(inputString.length() - 1).setText(s);
+            if (inputString.length() == currentMatch.getWord().length()) {
+                Log.d("Debug", "Check word");
+                checkWord();
+            }
+        }
+
+    }
+
+    public void checkWord() {
+        ClueDialog d;
+        if (inputString.equalsIgnoreCase(currentMatch.getWord())) {
+            Log.d("Debug", "");
+            d = new ClueDialog(this, "YOU WIN!");
+            d.setImage(R.drawable.victory);
+            // todo: What is the next action?
+        } else {
+            Log.d("Debug", "Nope!");
+            d = new ClueDialog(this, "Nope");
+            resetLetters();
+        }
+        d.show();
+    }
+
+    public void resetLetters() {
+        inputString = "";
+        for (TextView t : input) {
+            t.setText(" ");
+        }
+        for (TextView i : alphabet) {
+            i.setBackgroundResource(R.drawable.button);
+            i.setClickable(true);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() > input.size() - 1) {
+            v.setBackgroundResource(R.drawable.button_disabled);
+            String letter = alphabet.get(v.getId()).getText().toString();
+            updateInput(letter);
+            v.setClickable(false);
+        } else {
+            Log.d("Debug", "UNDO");
+        }
 
     }
 

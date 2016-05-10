@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean loggedIn = false;
     public static final String PREFS_NAME = "prefs";
     SharedPreferences settings;
+    public static ProgressDialog progDia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tv = (TextView) findViewById(R.id.status);
         mContext = this;
+        progDia = new ProgressDialog(this);
         tv.setText(serverStatus);
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         userNameDisplay = (TextView) findViewById(R.id.userNameDisplay);
@@ -42,7 +44,13 @@ public class MainActivity extends AppCompatActivity {
         userNameDisplay.setText(username);
 
         // Test connection to Server, currently disabled because it takes a long time when the server is down.
-        //new Server().testConnection();
+        progDia.setMessage("Connecting...");
+        progDia.show();
+        new Server().testConnection();
+
+
+
+
         if (username == "not_found") {
             //
             Intent myIntent = new Intent(MainActivity.this, Account_Activity.class);

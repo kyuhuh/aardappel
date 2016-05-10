@@ -29,31 +29,26 @@
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:id="@+id/image1View"
             android:layout_below="@+id/wordTextView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="96dp"
-            android:layout_alignParentLeft="false"
             android:layout_weight="0.5"
             android:src="@drawable/buttonhint"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:onClick="onClickMain"
-            android:scaleType="fitCenter" />
+            android:onClick="onClickMain" />
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:id="@+id/image2View"
             android:layout_below="@+id/wordTextView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="96dp"
-            android:layout_alignParentLeft="false"
             android:layout_weight="0.5"
             android:src="@drawable/buttonhint"
-            android:layout_row="1"
-            android:layout_column="3"
             android:onClick="onClickMain" />
     </LinearLayout>
 
@@ -64,23 +59,38 @@
         android:weightSum="1">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             android:id="@+id/image3View"
             android:layout_below="@+id/wordTextView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="96dp"
-            android:layout_alignParentLeft="false"
-            android:src="@drawable/buttonhint"
             android:layout_weight="0.5"
-            android:layout_row="2"
-            android:layout_column="2"
+            android:src="@drawable/buttonhint"
             android:onClick="onClickMain" />
     </LinearLayout>
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#d13033" />
+
     <GridLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/gridLetterInputView"
+        android:rowCount="1"></GridLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#d13033" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:id="@+id/gridLetterView"
         android:columnCount="7"
