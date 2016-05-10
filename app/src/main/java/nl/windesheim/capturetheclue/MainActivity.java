@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Test connection to Server, currently disabled because it takes a long time when the server is down.
         //new Server().testConnection();
-        if (username == "not_found") {
+        if (username.equals("not_found")) {
             //
             Intent myIntent = new Intent(MainActivity.this, Account_Activity.class);
             //myIntent.putExtra("key", value); //Optional parameters

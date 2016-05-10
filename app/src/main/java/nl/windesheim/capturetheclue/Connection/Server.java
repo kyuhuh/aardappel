@@ -44,7 +44,7 @@ public class Server {
 
     //static final String SERVER_URL = "http://46.129.41.143:666";  // Remote server, doesnt work from Windesheim
     //static final String SERVER_URL = "http://localhost:8080";   // Local server, doesnt work on emu
-    static final String SERVER_URL = "http://10.0.2.2:8080";      // Local server, Emulator ip
+    static final String SERVER_URL = "http://patatjes.esy.es";      // Local server, Emulator ip
 
 
     public void testConnection() { new JSONParser().execute(); }

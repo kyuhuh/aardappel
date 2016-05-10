@@ -9,10 +9,10 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_start);
     }
 
-    public void onClickMain(View view) {
+    public void onClickStart(View view) {
         switch (view.getId())
         {
             case R.id.friendgame:
@@ -20,8 +20,7 @@ public class StartActivity extends AppCompatActivity {
                 break;
 
             case R.id.randomgame:
-                //start game
-                //setContentView(R.layout.);
+                setContentView(R.layout.activity_wordselection);
                 break;
 
         }
