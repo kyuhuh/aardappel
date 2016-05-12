@@ -1,7 +1,6 @@
 package nl.windesheim.capturetheclue;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,12 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import org.json.JSONObject;
-
 import nl.windesheim.capturetheclue.Connection.Server;
-import nl.windesheim.capturetheclue.Models.Match;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId())
         {
             case R.id.start:
-                setContentView(R.layout.activity_start);
+                setContentView(R.layout.activity_play);
                 break;
 
             case R.id.currentgame:
@@ -77,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings:
                 //
                 break;
+
+            case R.id.button_random:
+
+                Log.d("DEBUG", "WHATTHEFUUUCK");
 
             case R.id.logoutButton:
 
