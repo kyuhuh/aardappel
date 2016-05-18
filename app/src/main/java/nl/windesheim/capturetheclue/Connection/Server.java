@@ -83,6 +83,11 @@ public class Server {
         Account_Activity.progDia.hide();
         }
 
+    public static void getUserMatches(int id) {
+        Log.d("Debug", "Retrieving matches for user [SERVER.java]");
+        new retrieveMatchesForUser(id).execute();
+    }
+
     public static void setResult(JSONObject j){
 
         try {
