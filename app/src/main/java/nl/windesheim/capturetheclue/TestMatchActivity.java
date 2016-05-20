@@ -126,7 +126,7 @@ public class TestMatchActivity extends AppCompatActivity {
         currentMatch = m;
     }
 
-    public void onClickMain(View view) {
+    public void onClickTest(View view) {
         Log.d("DEBUG", "Click");
         switch (view.getId()) {
             case R.id.image1View:

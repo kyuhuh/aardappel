@@ -1,10 +1,16 @@
 package nl.windesheim.capturetheclue;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
-public class StartActivity extends AppCompatActivity {
+
+public class StartActivity  extends AppCompatActivity  {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -12,17 +18,4 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
     }
 
-    public void onClickStart(View view) {
-        switch (view.getId())
-        {
-            case R.id.friendgame:
-                setContentView(R.layout.activity_friend);
-                break;
-
-            case R.id.randomgame:
-                setContentView(R.layout.activity_wordselection);
-                break;
-
-        }
-    }
 }

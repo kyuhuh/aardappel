@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="nl.windesheim.capturetheclue">
+    package="nl.windesheim.capturetheclue" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" android:required="true"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity android:name=".ClueAnswerActivity" />
         <activity android:name=".ClueFirstActivity" />
         <activity android:name=".ClueSecondActivity" />
@@ -20,7 +25,7 @@
         <activity android:name=".GameSecondActivity" />
         <activity android:name=".GameThirdActivity" />
         <activity android:name=".GameSentAllActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,8 +34,8 @@
         </activity>
         <activity android:name=".StartActivity" />
         <activity android:name=".Account_Activity" />
-        <activity android:name=".TestMatchActivity"></activity>
-        <activity android:name=".WordselectionActivity" />
+        <activity android:name=".TestMatchActivity" />
+        <activity android:name=".WordSelectionActivity" />
     </application>
 
 </manifest>
