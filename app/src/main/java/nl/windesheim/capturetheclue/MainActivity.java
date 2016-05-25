@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         Roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
         matchesTable = (ListView) findViewById(R.id.matchesTable);
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         // Set userID
         String idstring = settings.getString("uid", "not_found");
@@ -220,10 +223,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickMain(View view) {
         switch (view.getId()) {
-            case R.id.start:
+            /*case R.id.start:
 
                 setContentView(R.layout.activity_play);
-                break;
+                break;*/
 
             case R.id.refreshButton:
                 Log.d("DEBUG", "Refresh");
@@ -301,14 +304,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(friendIntent);
                 break;
 
-            case R.id.randomGame:
+            // Moved this into a function:
+            /*case R.id.randomGame:
                 //setContentView(R.layout.activity_wordselection);
                 Intent randomIntent = new Intent(getApplicationContext(), WordselectionActivity.class);
                 startActivity(randomIntent);
-                break;
+                break;*/
 
 
 
         }
+    }
+
+    public static void startWordSelection(int matchid) {
+        Intent randomIntent = new Intent(mContext.getApplicationContext(), WordselectionActivity.class);
+        randomIntent.putExtra("matchid", matchid);
+        mContext.startActivity(randomIntent);
     }
 }

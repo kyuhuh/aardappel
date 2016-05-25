@@ -57,6 +57,15 @@ public class WordselectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wordselection);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        int matchID;
+        Bundle extras = getIntent().getExtras();
+        matchID = extras.getInt("matchid");
+        Log.d("DEBUG", "Match id is " + matchID);
+
         list = (ListView) findViewById(R.id.listView);
         wordList = new ArrayList<HashMap<String, String>>();
         getData("http://patatjes.esy.es/words.php");
@@ -95,6 +104,8 @@ public class WordselectionActivity extends AppCompatActivity {
                     Log.d("debug", selectedWord);
 
                     Intent gameStartIntent = new Intent(getApplicationContext(), GameFirstActivity.class);
+
+                    // todo: instead of this, save the word to the match (based on ID) and continue to the first photo activity
                     gameStartIntent.putExtra("selectedWord",selectedWord);
                     startActivity(gameStartIntent);
                 }

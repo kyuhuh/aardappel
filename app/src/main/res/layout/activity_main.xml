@@ -22,8 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/findmatch_button"
-        android:textAlignment="center"
-        android:gravity="center"
+        android:background="@drawable/nieuwspel_button"
         android:id="@+id/findmatch"
         android:textColor="@color/White"
         android:onClick="onClickMain"
@@ -31,19 +30,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_weight="0.17" />
-    <!--android:background="@drawable/nieuwspel_button"/>-->
 
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="@string/start_button"
-        android:id="@+id/start"
-        android:onClick="onClickMain"
-        android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/friend"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="0.28" />
 
     <Button
         android:layout_width="match_parent"

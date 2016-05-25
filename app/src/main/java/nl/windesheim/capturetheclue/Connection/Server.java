@@ -36,6 +36,7 @@ import nl.windesheim.capturetheclue.MainActivity;
 import nl.windesheim.capturetheclue.Models.Match;
 import nl.windesheim.capturetheclue.Models.Picture;
 import nl.windesheim.capturetheclue.TestMatchActivity;
+import nl.windesheim.capturetheclue.WordselectionActivity;
 
 /**
  * Created by Peter on 4/6/2016.
@@ -112,8 +113,8 @@ public class Server {
                 Match m = new Gson().fromJson(response.toString(), Match.class);
                 // Do something with the gamestate
                 if (m.getStatus().equals("set_word")) {
-                    // start activity to set word
-                    Log.d("DEBUG", "Start word choice");
+                    // Word selection called
+                    MainActivity.startWordSelection(m.getID());
                 } else {
                     TestMatchActivity.startMatch(m);
                     Intent inent = new Intent(MainActivity.mContext, TestMatchActivity.class);

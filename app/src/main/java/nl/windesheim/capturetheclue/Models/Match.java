@@ -25,6 +25,10 @@ public class Match {
         return "Match #" + id + " has pictures " + pictures.toString() + " and expresses word '" + word.getWord() + "'";
     }
 
+    public int getID() {
+        return id;
+    }
+
     public String getWord() {
         return word.getWord();
     }

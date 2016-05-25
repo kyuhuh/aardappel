@@ -16,9 +16,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        android:theme="@style/AppTheme" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ClueAnswerActivity" />
         <activity android:name=".ClueFirstActivity" />
         <activity android:name=".ClueSecondActivity" />
@@ -31,7 +35,8 @@
         <activity android:name=".Account_Activity" />
         <activity android:name=".TestMatchActivity" />
         <activity android:name=".PlayActivity" />
-        <activity android:name=".WordSelectionActivity" />
+        <activity android:name=".WordselectionActivity"
+                  android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
