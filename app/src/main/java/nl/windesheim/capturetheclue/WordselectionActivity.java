@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class WordSelectionActivity extends AppCompatActivity {
+public class WordselectionActivity extends AppCompatActivity {
 
     String myJSON;
 
@@ -79,7 +79,7 @@ public class WordSelectionActivity extends AppCompatActivity {
             }
 
             ListAdapter adapter = new SimpleAdapter(
-                    WordSelectionActivity.this, wordList, R.layout.list_item,
+                    WordselectionActivity.this, wordList, R.layout.list_item,
                     new String[]{TAG_WORD},
                     new int[]{R.id.word}
             );

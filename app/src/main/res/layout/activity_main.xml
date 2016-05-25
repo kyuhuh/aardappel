@@ -71,8 +71,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/refreshButton"
         android:onClick="onClickMain"
-        android:layout_gravity="right" />
-        <!--android:src="@drawable/refresh" />-->
+        android:layout_gravity="right"
+        android:src="@drawable/refresh" />
 
     <ListView
         android:layout_width="match_parent"

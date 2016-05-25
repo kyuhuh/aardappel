@@ -268,14 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 setContentView(R.layout.activity_start);
                 break;
 
-            case R.id.currentgame:
-                //setContentView(R.layout.);
-                Log.d("DEBUG", "Clicked current game");
-                new Server().getMatch(1);
-
-                break;
-
-
 
             case R.id.camerabutton:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -303,13 +295,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
 
-            case R.id.openPrefsDialogButton:
-                Dialog d = new Dialog(this);
-                d.setTitle("Saved Preferences");
-                d.setContentView(R.layout.activity_friend);
-                d.show();
-                break;
-
             case R.id.friendGame:
                 //setContentView(R.layout.activity_friend);
                 Intent friendIntent = new Intent(getApplicationContext(), FriendActivity.class);
@@ -318,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.randomGame:
                 //setContentView(R.layout.activity_wordselection);
-                Intent randomIntent = new Intent(getApplicationContext(), WordSelectionActivity.class);
+                Intent randomIntent = new Intent(getApplicationContext(), WordselectionActivity.class);
                 startActivity(randomIntent);
                 break;
 
