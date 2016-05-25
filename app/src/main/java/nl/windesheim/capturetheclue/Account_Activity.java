@@ -38,7 +38,7 @@ public class Account_Activity extends AppCompatActivity {
         Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
     }
 
-    public void onClickMain(View view) {
+    public void onAccountClickMain(View view) {
         switch (view.getId()) {
             case R.id.loginButton:
 

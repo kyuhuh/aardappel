@@ -12,6 +12,7 @@ public class matchListItem {
     private int match_id;
     private String opponent;
     private String turn_status;
+    private boolean clickable;
 
     public matchListItem(int a, String o, String t) {
         match_id = a;
@@ -37,6 +38,14 @@ public class matchListItem {
 
     public void setTurnInfo(String s) {
         turn_status = s;
+    }
+
+    public void setClickable(boolean c) {
+        clickable = c;
+    }
+
+    public boolean getClickable() {
+        return clickable;
     }
 
 

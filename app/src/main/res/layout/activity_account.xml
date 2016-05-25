@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="@string/loginButton"
             android:id="@+id/loginButton"
-            android:onClick="onClickMain"
+            android:onClick="onAccountClickMain"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </RelativeLayout>

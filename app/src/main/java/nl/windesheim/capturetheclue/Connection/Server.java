@@ -66,6 +66,7 @@ public class Server {
                 if (user.getString("status").contentEquals("OK")) {
                     Log.d("DEBUG", user.getString("token"));
                     User u = new User(user.getString("username"), user.getString("token"));
+                    u.setUserID(user.getString("id"));
                     Account_Activity.handleLogin(u);
                 } else if (user.getString("status").contentEquals("User does not exist.")) {
                     Account_Activity.showPopup("Username does not exist. Did you type it correctly?");
@@ -88,6 +89,11 @@ public class Server {
         new retrieveMatchesForUser(id).execute();
     }
 
+    public static void startNewMatch(int i, int s) {
+        Log.d("Debug", "Creating match for user [SERVER.java]");
+        new startNewMatch(i, s).execute();
+    }
+
     public static void setResult(JSONObject j){
 
         try {
@@ -102,14 +108,17 @@ public class Server {
 
             if (response.getString("status").contentEquals("OK")) {
 
-                Log.d("DEBUG", "Status is ok");
-                Log.d("DEBUG", "Response is: " + response.toString());
                 // Parse the server response into a Match object
-
                 Match m = new Gson().fromJson(response.toString(), Match.class);
-                TestMatchActivity.startMatch(m);
-                Intent inent = new Intent(MainActivity.mContext, TestMatchActivity.class);
-                MainActivity.mContext.startActivity(inent);
+                // Do something with the gamestate
+                if (m.getStatus().equals("set_word")) {
+                    // start activity to set word
+                    Log.d("DEBUG", "Start word choice");
+                } else {
+                    TestMatchActivity.startMatch(m);
+                    Intent inent = new Intent(MainActivity.mContext, TestMatchActivity.class);
+                    MainActivity.mContext.startActivity(inent);
+                }
             } else if (response.getString("status").contentEquals("Match not found.")) {
                 Log.d("DEBUG", "Match not found");
                 // Do something useful here

@@ -464,3 +464,101 @@ class retrieveMatchesForUser extends AsyncTask<String, String, JSONObject> {
     }
 }
 
+class startNewMatch extends AsyncTask<String, String, JSONObject> {
+
+    HttpURLConnection urlConnection;
+    private int id;
+    private int side;
+
+    public startNewMatch(int i, int s) {
+        id = i;
+        side = s;
+    }
+
+    @Override
+    protected JSONObject doInBackground(String... args) {
+
+        Log.d("DEBUG", "Trying to create match for user " + id);
+        String status = null;
+        String error = null;
+        JSONObject json = new JSONObject();
+
+        // Try to connect to the server, if it doesnt set status accordingly.
+        try {
+
+            // Connection part
+            URL url = new URL(Server.SERVER_URL + "/queue.php?uid=" + id + "&side=" + side);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            Log.d("Debug", url.toString());
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            //urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded");
+
+            urlConnection.setUseCaches(false);
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+
+            //Send request
+            DataOutputStream wr = new DataOutputStream(
+                    urlConnection.getOutputStream());
+            wr.flush();
+            wr.close();
+
+            // Response part
+
+            InputStream is = urlConnection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            String line;
+            StringBuffer response = new StringBuffer();
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append('\r');
+            }
+            rd.close();
+            try {
+                json = new JSONObject(response.toString());
+            } catch (JSONException j) {
+                error = "Could not parse JSON, " + j.getMessage();
+                Log.d("ERROR", "Couldnt parse JSON. Is it valid?");
+            }
+
+        } catch (Exception e) {
+            error = "Could not connect to server: " + e.getLocalizedMessage();
+
+        } finally {
+
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+
+        // Check if any errors where encountered.
+        String JSONresult;
+        if (error != null) {
+            JSONresult = "{ \"status\" : \" " + status + " \", " +
+                    " \"error\" : \" " + error + " \" }";
+            try {
+                json = new JSONObject(JSONresult.toString());
+            } catch (JSONException j) {
+                error = "Could not convert error message to JSON Object, " + j.getMessage();
+                Log.d("ERROR", "Error parsing JSON Object");
+            }
+        }
+
+        return json;
+    }
+
+    protected void onPostExecute(JSONObject json) {
+
+        Log.d("DEBUG", "Response from trying to create match: " + json.toString());
+        /*try {
+            MainActivity.updateList(json);
+        } catch (JSONException je) {
+            Log.d("DEBUG", "Something went from with parsing JSON in mainactivity: " + je.getMessage());
+        }*/
+
+    }
+}
+

@@ -1,6 +1,7 @@
 package nl.windesheim.capturetheclue.Models;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.view.menu.MenuView.ItemView;
 import android.util.Log;
@@ -43,6 +44,11 @@ public class matchListItemAdapter extends ArrayAdapter<matchListItem> {
         // Populate the data into the template view using the data object
         oppo.setText(match.getOpponentInfo());
         state.setText(match.getTurnInfo());
+        if (!match.getClickable()) {
+            convertView.setBackgroundColor(Color.LTGRAY);
+            convertView.setEnabled(false);
+            convertView.setOnClickListener(null);
+        }
         // Return the completed view to render on screen
 
         return convertView;
