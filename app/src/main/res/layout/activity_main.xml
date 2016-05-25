@@ -39,7 +39,11 @@
         android:text="@string/start_button"
         android:id="@+id/start"
         android:onClick="onClickMain"
+<<<<<<< HEAD
         android:layout_alignParentBottom="true"
+=======
+        android:layout_alignTop="@+id/friend"
+>>>>>>> kyu
         android:layout_centerHorizontal="true"
         android:layout_weight="0.28" />-->
 

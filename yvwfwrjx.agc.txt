@@ -1,0 +1,51 @@
+﻿Merge branch 'kyu' into Peter
+
+# Conflicts:
+#	app/app.iml
+#	app/build.gradle
+#	app/src/main/AndroidManifest.xml
+#	app/src/main/java/nl/windesheim/capturetheclue/Account_Activity.java
+#	app/src/main/java/nl/windesheim/capturetheclue/MainActivity.java
+#	app/src/main/java/nl/windesheim/capturetheclue/StartActivity.java
+#	app/src/main/res/layout/activity_account.xml
+#	app/src/main/res/layout/activity_main.xml
+#	app/src/main/res/layout/activity_start.xml
+#	app/src/main/res/layout/activity_test_match.xml
+#	app/src/main/res/values/strings.xml
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch Peter
+# Your branch is up-to-date with 'origin/Peter'.
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   app/app.iml
+#	modified:   app/build.gradle
+#	modified:   app/src/main/AndroidManifest.xml
+#	modified:   app/src/main/java/nl/windesheim/capturetheclue/Account_Activity.java
+#	modified:   app/src/main/java/nl/windesheim/capturetheclue/GameFirstActivity.java
+#	modified:   app/src/main/java/nl/windesheim/capturetheclue/MainActivity.java
+#	new file:   app/src/main/java/nl/windesheim/capturetheclue/StartActivity.java
+#	modified:   app/src/main/java/nl/windesheim/capturetheclue/TestMatchActivity.java
+#	modified:   app/src/main/java/nl/windesheim/capturetheclue/WordselectionActivity.java
+#	new file:   app/src/main/res/drawable/activated.png
+#	modified:   app/src/main/res/layout/activity_account.xml
+#	new file:   app/src/main/res/layout/activity_camera.xml
+#	modified:   app/src/main/res/layout/activity_friend.xml
+#	new file:   app/src/main/res/layout/activity_gamefirst.xml
+#	modified:   app/src/main/res/layout/activity_main.xml
+#	new file:   app/src/main/res/layout/activity_start.xml
+#	modified:   app/src/main/res/layout/activity_test_match.xml
+#	modified:   app/src/main/res/layout/activity_wordselection.xml
+#	new file:   app/src/main/res/layout/list_item.xml
+#	modified:   app/src/main/res/values/strings.xml
+#
+

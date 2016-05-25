@@ -3,6 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
+    useLibrary 'org.apache.http.legacy'
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 
     defaultConfig {
         applicationId "nl.windesheim.capturetheclue"
@@ -24,5 +30,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.code.gson:gson:2.2.4'
+<<<<<<< HEAD
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+=======
+    compile "org.apache.httpcomponents:httpmime:4.2.3"
+>>>>>>> kyu
 }
