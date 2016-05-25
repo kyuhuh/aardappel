@@ -30,9 +30,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.code.gson:gson:2.2.4'
-<<<<<<< HEAD
+
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
-=======
+
     compile "org.apache.httpcomponents:httpmime:4.2.3"
->>>>>>> kyu
+
 }

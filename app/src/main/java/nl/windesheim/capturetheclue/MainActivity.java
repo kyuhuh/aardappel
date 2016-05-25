@@ -3,7 +3,7 @@ package nl.windesheim.capturetheclue;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Dialog;
-<<<<<<< HEAD
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.graphics.Typeface;
 import android.os.Build;
-=======
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,12 +20,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
->>>>>>> kyu
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-<<<<<<< HEAD
+
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -41,23 +41,23 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-=======
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
->>>>>>> kyu
+
 
 import java.util.ArrayList;
 
 import nl.windesheim.capturetheclue.Connection.Server;
-<<<<<<< HEAD
+
 import nl.windesheim.capturetheclue.Models.ClueDialog;
 import nl.windesheim.capturetheclue.Models.matchListItem;
 import nl.windesheim.capturetheclue.Models.matchListItemAdapter;
-=======
->>>>>>> kyu
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -112,16 +112,16 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.startActivity(myIntent);
         }
 
-<<<<<<< HEAD
+
         new Server().getUserMatches(currentUserID);
 
-=======
+
 //camera
         imageView = (ImageView) findViewById(R.id.imageView);
         File storageDir = Environment.getExternalStorageDirectory();
         outputFile = new File(storageDir, "output.jpg");
     }
->>>>>>> kyu
+
 
     //for camera
     @Override
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickMain(View view) {
         switch (view.getId()) {
             case R.id.start:
-<<<<<<< HEAD
+
                 setContentView(R.layout.activity_play);
                 break;
 
@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.buttonPickCreate:
                 createMatch(1);
                 askSideDialog.dismiss();
-=======
+
                 Log.d("DEBUG", "Clicked start game");
                 //Intent startIntent = new Intent(getApplicationContext(), StartActivity.class);
                 //startActivity(startIntent);
@@ -275,16 +275,13 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.settings:
-                setContentView(R.layout.activity_camera);
-                break;
 
 
             case R.id.camerabutton:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));
                 startActivityForResult(intent, 1001);
->>>>>>> kyu
+
                 break;
 
 
@@ -304,8 +301,7 @@ public class MainActivity extends AppCompatActivity {
                 //myIntent.putExtra("key", value); //Optional parameters
                 MainActivity.this.startActivity(myIntent);
                 break;
-<<<<<<< HEAD
-=======
+
 
             case R.id.openPrefsDialogButton:
                 Dialog d = new Dialog(this);
@@ -327,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
 
->>>>>>> kyu
+
         }
     }
 }

@@ -38,11 +38,8 @@ public class Account_Activity extends AppCompatActivity {
         Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
     }
 
-<<<<<<< HEAD
+
     public void onAccountClickMain(View view) {
-=======
-    public void onClickAccount(View view) {
->>>>>>> kyu
         switch (view.getId()) {
             case R.id.loginButton:
 

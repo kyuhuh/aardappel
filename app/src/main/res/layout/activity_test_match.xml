@@ -37,14 +37,10 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.5"
             android:src="@drawable/buttonhint"
-<<<<<<< HEAD
-            android:onClick="onClickMain" />
-=======
             android:layout_row="1"
             android:layout_column="1"
-            android:onClick="onClickTest"
-            android:scaleType="fitCenter" />
->>>>>>> kyu
+            android:onClick="onClickTest" />
+
 
         <ImageView
             android:layout_width="fill_parent"
@@ -56,13 +52,10 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.5"
             android:src="@drawable/buttonhint"
-<<<<<<< HEAD
-            android:onClick="onClickMain" />
-=======
             android:layout_row="1"
             android:layout_column="3"
             android:onClick="onClickTest" />
->>>>>>> kyu
+
     </LinearLayout>
 
     <LinearLayout
@@ -80,14 +73,11 @@
             android:layout_below="@+id/wordTextView"
             android:layout_centerHorizontal="true"
             android:layout_weight="0.5"
-<<<<<<< HEAD
             android:src="@drawable/buttonhint"
-            android:onClick="onClickMain" />
-=======
             android:layout_row="2"
             android:layout_column="2"
             android:onClick="onClickTest" />
->>>>>>> kyu
+
     </LinearLayout>
 
     <View
