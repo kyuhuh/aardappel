@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Match {
 
-    private String status;
+    private String game_status;
     private int id;
     private int ratingid;
     private int player1id;
@@ -39,5 +39,9 @@ public class Match {
 
     public Picture getThirdPicture() {
         return pictures.get(2);
+    }
+
+    public String getStatus() {
+        return game_status;
     }
 }

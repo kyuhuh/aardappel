@@ -10,6 +10,7 @@ public class User {
 
     public String username;
     public String token;
+    private int userID = -1;
     private SharedPreferences sharedPreferences;
     private static String PREF_NAME = "prefs";
 
@@ -30,7 +31,12 @@ public class User {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putString("username", username);
         editor.putString("token", token);
+        editor.putString("uid", userID + "");
         editor.commit();
+    }
+
+    public void setUserID(String i) {
+        userID = Integer.parseInt(i);
     }
 
 
