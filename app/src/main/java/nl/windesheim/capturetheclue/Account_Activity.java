@@ -31,6 +31,10 @@ public class Account_Activity extends AppCompatActivity {
         progDia = new ProgressDialog(this);
         setContentView(R.layout.activity_account);
         mContext = this;
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
     public static void showPopup(String text) {
@@ -73,6 +77,7 @@ public class Account_Activity extends AppCompatActivity {
         String userName = user.username;
         MainActivity.userNameDisplay.setText(userName);
         MainActivity.loggedIn = true;
+        MainActivity.setUserID();
         
 
     }

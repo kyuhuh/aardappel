@@ -20,13 +20,11 @@ public class ClueDialog extends Dialog implements View.OnClickListener {
 
     ImageView img;
 
-    public ClueDialog(Context context, String text) {
+    public ClueDialog(Context context) {
         super(context);
         setContentView(R.layout.cluedialog);
-        TextView message = (TextView) findViewById(R.id.message);
         Button OK = (Button) findViewById(R.id.ok_button);
         OK.setOnClickListener(this);
-        message.setText(text);
         getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
         getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         img = (ImageView) findViewById(R.id.resultImage);

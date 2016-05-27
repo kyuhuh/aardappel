@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="nl.windesheim.capturetheclue" >
+    package="nl.windesheim.capturetheclue">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" android:required="true"/>
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        android:required="true" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -35,8 +38,10 @@
         <activity android:name=".Account_Activity" />
         <activity android:name=".TestMatchActivity" />
         <activity android:name=".PlayActivity" />
-        <activity android:name=".WordselectionActivity"
-                  android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".WordselectionActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

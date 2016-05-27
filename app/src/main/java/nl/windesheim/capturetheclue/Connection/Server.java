@@ -45,7 +45,8 @@ public class Server {
 
     //static final String SERVER_URL = "http://46.129.41.143:666";  // Remote server, doesnt work from Windesheim
     //static final String SERVER_URL = "http://localhost:8080";   // Local server, doesnt work on emu
-    static final String SERVER_URL = "http://10.0.2.2:8080";      // Local server, Emulator ip
+    //static final String SERVER_URL = "http://10.0.2.2:8080";      // Local server, Emulator ip
+    static final String SERVER_URL = "http://patatjes.esy.es";      // Local server, Emulator ip
 
 
     public void testConnection() { new JSONParser().execute(); }
@@ -69,6 +70,7 @@ public class Server {
                     User u = new User(user.getString("username"), user.getString("token"));
                     u.setUserID(user.getString("id"));
                     Account_Activity.handleLogin(u);
+
                 } else if (user.getString("status").contentEquals("User does not exist.")) {
                     Account_Activity.showPopup("Username does not exist. Did you type it correctly?");
                 } else if (user.getString("status").contentEquals("Passwords do not match.")) {
@@ -115,7 +117,12 @@ public class Server {
                 if (m.getStatus().equals("set_word")) {
                     // Word selection called
                     MainActivity.startWordSelection(m.getID());
-                } else {
+                }
+                else if (m.getStatus().equals("take_picture1")) {
+                    // Start first picture activity
+                }
+                else
+                {
                     TestMatchActivity.startMatch(m);
                     Intent inent = new Intent(MainActivity.mContext, TestMatchActivity.class);
                     MainActivity.mContext.startActivity(inent);

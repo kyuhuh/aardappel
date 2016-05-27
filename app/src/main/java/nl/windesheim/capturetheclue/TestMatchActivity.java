@@ -136,20 +136,19 @@ public class TestMatchActivity extends AppCompatActivity implements View.OnClick
         ClueDialog d;
         if (inputString.equalsIgnoreCase(currentMatch.getWord())) {
             Log.d("Debug", "");
-            d = new ClueDialog(this, "YOU WIN!");
+            d = new ClueDialog(this);
             d.setImage(R.drawable.nice01);
             d.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
+                    // todo: save the match as ended
                     Intent myIntent = new Intent(TestMatchActivity.this, MainActivity.class);
                     startActivity(myIntent);
                 }
             });
-
-            // todo: What is the next action?
         } else {
             Log.d("Debug", "Nope!");
-            d = new ClueDialog(this, "Nope");
+            d = new ClueDialog(this);
             resetLetters();
         }
         d.show();

@@ -24,6 +24,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import android.view.ViewGroup;
@@ -61,7 +63,7 @@ import nl.windesheim.capturetheclue.Models.matchListItemAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int currentUserID;
+    public static int currentUserID;
     public static String serverStatus = "";
     public static TextView tv;
     private static ListView matchesTable;
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean loggedIn = false;
     private Dialog askSideDialog;
     public static final String PREFS_NAME = "prefs";
-    SharedPreferences settings;
+    public static SharedPreferences settings;
     private static Typeface Roboto;
     private static ArrayList<matchListItem> list;
 
@@ -83,20 +85,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
-        Roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
+        Roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         matchesTable = (ListView) findViewById(R.id.matchesTable);
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        // Set userID
-        String idstring = settings.getString("uid", "not_found");
-        if (idstring.equals("not_found")) {
-            currentUserID = -1;
-        } else {
-            currentUserID = Integer.parseInt(idstring);
-        }
+        setUserID();
+
         userNameDisplay = (TextView) findViewById(R.id.userNameDisplay);
         String username = settings.getString("username", "not_found");
         userNameDisplay.setTypeface(Roboto);
@@ -105,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         matchesHeader.setTypeface(Roboto);
         Button startGame = (Button) findViewById(R.id.findmatch);
         startGame.setTypeface(Roboto);
+        Button settingsButton = (Button) findViewById(R.id.settings);
+        settingsButton.setTypeface(Roboto);
 
         // Test connection to Server, currently disabled because it takes a long time when the server is down.
         //new Server().testConnection();
@@ -119,12 +118,11 @@ public class MainActivity extends AppCompatActivity {
         new Server().getUserMatches(currentUserID);
 
 
-//camera
+    //camera
         imageView = (ImageView) findViewById(R.id.imageView);
         File storageDir = Environment.getExternalStorageDirectory();
         outputFile = new File(storageDir, "output.jpg");
     }
-
 
     //for camera
     @Override
@@ -134,6 +132,16 @@ public class MainActivity extends AppCompatActivity {
             options.inSampleSize = 8;
             Bitmap bitmap = BitmapFactory.decodeFile(outputFile.getAbsolutePath(), options);
             imageView.setImageBitmap(bitmap);
+        }
+    }
+
+    public static void setUserID() {
+        // Set userID
+        String idstring = settings.getString("uid", "not_found");
+        if (idstring.equals("not_found")) {
+            currentUserID = -1;
+        } else {
+            currentUserID = Integer.parseInt(idstring);
         }
     }
 
@@ -181,18 +189,26 @@ public class MainActivity extends AppCompatActivity {
                 nowPlaying = "Now playing against " + currentObject.getString("player2name");
                 if (currentObject.getString("game_status").equals("set_word")) {
                     Log.d("DEBUG", "Ik moet het woord kiezen");
-                    gameStatus = "Jouw beurt: kies een woord!";
-                    clickable = true;
+                    gameStatus = "Your turn, pick a word!";
                 }
+                if (currentObject.getString("game_status").equals("take_picture1")) {
+                    Log.d("DEBUG", "I have to take a picture");
+                    gameStatus = "Your turn: take first picture.";
+                }
+                clickable = true;
             }
             if (currentObject.getString("player2name").equals("You")) {
                 Log.d("DEBUG", "Ik ben speler 2");
                 nowPlaying = "Now playing against " + currentObject.getString("player1name");
                 if (currentObject.getString("game_status").equals("set_word")) {
-                    Log.d("DEBUG", "Ik moet wachten");
-                    gameStatus = "Tegenstander is een woord aan het kiezen.";
-                    clickable = false;
+                    Log.d("DEBUG", "I have to wait");
+                    gameStatus = "Opponent is choosing a word.";
                 }
+                if (currentObject.getString("game_status").equals("take_picture1")) {
+                    Log.d("DEBUG", "Opponent has to take a picture");
+                    gameStatus = "Opponent is taking the first picture.";
+                }
+                clickable = false;
             }
 
             String matchid = currentObject.getString("id");
@@ -233,19 +249,7 @@ public class MainActivity extends AppCompatActivity {
                 new Server().getUserMatches(currentUserID);
                 break;
 
-            case R.id.settings:
-                //
-                Log.d("DEBUG", "Clicked settings");
-                setContentView(R.layout.activity_settings);
 
-                userNameDisplay = (TextView) findViewById(R.id.userNameDisplay);
-                String username = settings.getString("username", "not_found");
-                userNameDisplay.setText(username);
-
-                TextView userIDDisplay = (TextView) findViewById(R.id.userIdDisplay);
-                userIDDisplay.setText(currentUserID + "");
-
-                break;
 
             case R.id.findmatch:
                 //
@@ -279,6 +283,12 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
+            case R.id.settings:
+                //
+                Log.d("DEBUG", "Clicked settings");
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                MainActivity.this.startActivity(settingsIntent);
+                break;
 
             case R.id.logoutButton:
 
