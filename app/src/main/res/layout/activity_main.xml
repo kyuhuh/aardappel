@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/LightOrange"
+    android:background="@color/YellowTint"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".MainActivity"
@@ -13,14 +13,15 @@
         android:id="@+id/shadowLine"
         android:longClickable="false"
         android:background="@drawable/schaduwlijn"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="70dp" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginTop="20dp">
 
     <TextView
         android:layout_width="fill_parent"
@@ -88,7 +89,8 @@
         android:layout_height="131dp"
         android:id="@+id/matchesTable"
         android:layout_gravity="center_horizontal"
-        tools:listitem="@android:layout/simple_list_item_2" />
+        tools:listitem="@android:layout/simple_list_item_2"
+            android:background="@color/White" />
 
     </LinearLayout>
 
