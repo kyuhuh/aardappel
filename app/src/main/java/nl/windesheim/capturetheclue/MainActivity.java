@@ -2,10 +2,12 @@ package nl.windesheim.capturetheclue;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Dialog;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
@@ -26,6 +28,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import android.view.ViewGroup;
@@ -79,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     File outputFile;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +97,10 @@ public class MainActivity extends AppCompatActivity {
         Roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
         matchesTable = (ListView) findViewById(R.id.matchesTable);
         settings = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.logo);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setElevation(0);
 
         setUserID();
 
@@ -102,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
         matchesHeader.setTypeface(Roboto);
         Button startGame = (Button) findViewById(R.id.findmatch);
         startGame.setTypeface(Roboto);
-        Button settingsButton = (Button) findViewById(R.id.settings);
-        settingsButton.setTypeface(Roboto);
 
         // Test connection to Server, currently disabled because it takes a long time when the server is down.
         //new Server().testConnection();
@@ -143,13 +151,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             currentUserID = Integer.parseInt(idstring);
         }
-    }
-
-    public static void showPopup(String text) {
-
-
-        Log.d("Debug", "Showing popup");
-        Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
     }
 
     public void createMatch(int i) {
@@ -237,19 +238,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void showStartedDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("Your match is being created and will show up in the list of current games soon.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // FIRE ZE MISSILES!
+
+                    }
+                });
+
+        builder.show();
+
+    }
+
     public void onClickMain(View view) {
         switch (view.getId()) {
-            /*case R.id.start:
-
-                setContentView(R.layout.activity_play);
-                break;*/
 
             case R.id.refreshButton:
                 Log.d("DEBUG", "Refresh");
                 new Server().getUserMatches(currentUserID);
                 break;
-
-
 
             case R.id.findmatch:
                 //
@@ -263,16 +272,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.buttonPickGuess:
                 createMatch(0);
                 askSideDialog.dismiss();
+                showStartedDialog();
                 break;
 
             case R.id.buttonPickCreate:
                 createMatch(1);
                 askSideDialog.dismiss();
-
-                Log.d("DEBUG", "Clicked start game");
-                //Intent startIntent = new Intent(getApplicationContext(), StartActivity.class);
-                //startActivity(startIntent);
-                setContentView(R.layout.activity_start);
+                showStartedDialog();
                 break;
 
 
@@ -283,52 +289,36 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
-            case R.id.settings:
-                //
-                Log.d("DEBUG", "Clicked settings");
-                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                MainActivity.this.startActivity(settingsIntent);
-                break;
-
-            case R.id.logoutButton:
-
-                Log.d("DEBUG", "Pompompom");
-                Context c = this;
-                settings = c.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = settings.edit();
-
-                editor.clear();
-                editor.commit();
-                loggedIn = false;
-                currentUserID = -1;
-
-                Intent myIntent = new Intent(MainActivity.this, Account_Activity.class);
-                //myIntent.putExtra("key", value); //Optional parameters
-                MainActivity.this.startActivity(myIntent);
-                break;
-
-
             case R.id.friendGame:
                 //setContentView(R.layout.activity_friend);
                 Intent friendIntent = new Intent(getApplicationContext(), FriendActivity.class);
                 startActivity(friendIntent);
                 break;
 
-            // Moved this into a function:
-            /*case R.id.randomGame:
-                //setContentView(R.layout.activity_wordselection);
-                Intent randomIntent = new Intent(getApplicationContext(), WordselectionActivity.class);
-                startActivity(randomIntent);
-                break;*/
-
-
-
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                MainActivity.this.startActivity(settingsIntent);
+                break;
+        }
+        return true;
     }
 
     public static void startWordSelection(int matchid) {
         Intent randomIntent = new Intent(mContext.getApplicationContext(), WordselectionActivity.class);
         randomIntent.putExtra("matchid", matchid);
         mContext.startActivity(randomIntent);
+    }
+
+    public static void takePicture(int matchid) {
+        Log.d("DEBUG", "Taking picture");
+        //Intent randomIntent = new Intent(mContext.getApplicationContext(), WordselectionActivity.class);
+        //randomIntent.putExtra("matchid", matchid);
+        //mContext.startActivity(randomIntent);
     }
 }

@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/LightOrange</item>
         <item name="colorPrimaryDark">@null</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="dialog_animation">

@@ -46,7 +46,7 @@ public class Server {
     //static final String SERVER_URL = "http://46.129.41.143:666";  // Remote server, doesnt work from Windesheim
     //static final String SERVER_URL = "http://localhost:8080";   // Local server, doesnt work on emu
     //static final String SERVER_URL = "http://10.0.2.2:8080";      // Local server, Emulator ip
-    static final String SERVER_URL = "http://patatjes.esy.es";      // Local server, Emulator ip
+    public static final String SERVER_URL = "http://patatjes.esy.es";      // Webserver
 
 
     public void testConnection() { new JSONParser().execute(); }
@@ -120,6 +120,7 @@ public class Server {
                 }
                 else if (m.getStatus().equals("take_picture1")) {
                     // Start first picture activity
+                    MainActivity.takePicture(m.getID());
                 }
                 else
                 {

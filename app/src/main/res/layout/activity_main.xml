@@ -7,6 +7,12 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@color/LightOrange"></LinearLayout>
+
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -18,81 +24,91 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:padding="10dp"
-        android:layout_marginTop="20dp">
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:id="@+id/userNameDisplay"
-        android:layout_weight="0.25"
-        android:layout_gravity="right"
-        android:textAlignment="viewEnd" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:padding="10dp"
+            android:layout_marginTop="20dp">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/findmatch_button"
-        android:background="@drawable/nieuwspel_button"
-        android:id="@+id/findmatch"
-        android:textColor="@color/White"
-        android:onClick="onClickMain"
-        android:paddingLeft="56dp"
-        android:paddingBottom="10dp" />
-
+            <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/userNameDisplay"
+            android:layout_weight="0.25"
+            android:layout_gravity="right"
+            android:textAlignment="viewEnd" />
 
         <Button
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/nieuwspel_button"
-        android:text="@string/settings_button"
-        android:textColor="@color/White"
-        android:id="@+id/settings"
-        android:onClick="onClickMain"
-        android:layout_weight="0.28"
-        android:paddingLeft="56dp"
-        android:paddingBottom="10dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/findmatch_button"
+            android:background="@drawable/nieuwspel_button"
+            android:id="@+id/findmatch"
+            android:textColor="@color/White"
+            android:onClick="onClickMain"
+            android:paddingLeft="56dp"
+            android:paddingBottom="10dp" />
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:background="@color/YellowTint">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Matches: "
+                android:id="@+id/matchesHeaderText"
+                    android:textIsSelectable="false"
+                android:layout_gravity="center_horizontal" />
+
+                <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/refreshButton"
+                android:onClick="onClickMain"
+                android:background="@null"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/refresh" />
+            </LinearLayout>
+
+            <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/matchesTable"
+                android:scrollbars="none"
+            tools:listitem="@android:layout/simple_list_item_2"
+                android:background="@color/White"
+                android:smoothScrollbar="false"
+                android:stackFromBottom="false" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current Matches: "
-        android:id="@+id/matchesHeaderText"
-        android:textSize="20sp"
-        android:textIsSelectable="false"
+        android:id="@+id/logoView"
         android:layout_gravity="center_horizontal"
-        android:textStyle="bold"
-        android:textColor="@color/White" />
-
-        <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/refreshButton"
-        android:onClick="onClickMain"
-        android:background="@null"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/refresh" />
-
-        <ListView
-        android:layout_width="match_parent"
-        android:layout_height="131dp"
-        android:id="@+id/matchesTable"
-        android:layout_gravity="center_horizontal"
-        tools:listitem="@android:layout/simple_list_item_2"
-            android:background="@color/White" />
-
-    </LinearLayout>
+        android:background="@drawable/logo_toolbar" />
 
 
 </FrameLayout>

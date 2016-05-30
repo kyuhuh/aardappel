@@ -52,7 +52,7 @@
         android:text="Sign Out"
         android:id="@+id/logoutButton"
         android:layout_gravity="center_horizontal"
-        android:onClick="onClickMain" />
+        android:onClick="onClickSettings" />
 
     <ImageButton
         android:layout_width="72dp"
