@@ -5,16 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView userNameDisplay = (TextView) findViewById(R.id.userNameDisplay);
         String username = MainActivity.settings.getString("username", "not_found");
@@ -26,11 +32,7 @@ public class SettingsActivity extends Activity {
 
     public void onClickSettings(View view) {
         switch (view.getId()) {
-            case R.id.backButton:
-                finish();
-                break;
             case R.id.logoutButton:
-                Log.d("DEBUG", "Pompompom");
                 Context c = this;
 
                 SharedPreferences.Editor editor = MainActivity.settings.edit();

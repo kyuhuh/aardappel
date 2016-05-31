@@ -4,6 +4,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.util.Pair;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,6 +57,11 @@ public class Match {
     public String getWord() {
         return word.getWord();
     }
+
+    public int getWordID() {
+        return word.getID();
+    }
+
     public void setWord(Word w) { word = w; }
 
     public Picture getFirstPicture() {
@@ -66,23 +80,42 @@ public class Match {
         return game_status;
     }
 
+    public void setStatus(String S) { game_status = S; }
+
     public Boolean save() {
-        new saveMatch(this).execute();
+
+        com.google.gson.Gson gson = new GsonBuilder().registerTypeAdapter(Match.class, new MatchSerializer())
+                .create();
+        String request = gson.toJson(this);
+
+        Log.d("REQUEST", request);
+
+        new saveMatch(request).execute();
         return true;
     }
 }
 
-class saveMatch extends AsyncTask<String, String, JSONObject> {
+class MatchSerializer implements JsonSerializer<Match> {
+    public JsonElement serialize(final Match match, final Type type, final JsonSerializationContext context) {
+        JsonObject result = new JsonObject();
+        result.add("id", new JsonPrimitive(match.getID()));
+        result.add("word", new JsonPrimitive(match.getWordID()));
+        result.add("game_status", new JsonPrimitive(match.getStatus()));
+        return result;
+    }
+}
+
+class saveMatch extends AsyncTask<String, String, String> {
 
     HttpURLConnection urlConnection;
-    private Match match;
+    private String match;
 
-    public saveMatch(Match m) {
+    public saveMatch(String m) {
         match = m;
     }
 
     @Override
-    protected JSONObject doInBackground(String... args) {
+    protected String doInBackground(String... args) {
 
 
         String status = null;
@@ -93,11 +126,8 @@ class saveMatch extends AsyncTask<String, String, JSONObject> {
         try {
 
             // Connection part
-            URL url = new URL(Server.SERVER_URL + "/saveMatch.php?mid=" + match.getID());
+            URL url = new URL(Server.SERVER_URL + "/saveMatch.php");
             urlConnection = (HttpURLConnection) url.openConnection();
-
-            List<Pair> params = new ArrayList<Pair>();
-            params.add(new Pair("json", match));
 
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
@@ -111,7 +141,7 @@ class saveMatch extends AsyncTask<String, String, JSONObject> {
             //Send request
             DataOutputStream wr = new DataOutputStream(
                     urlConnection.getOutputStream());
-            wr.writeBytes(Server.getQuery(params));
+            wr.writeBytes(match);
             wr.flush();
             wr.close();
 
@@ -127,17 +157,23 @@ class saveMatch extends AsyncTask<String, String, JSONObject> {
             }
             rd.close();
 
-            Log.d("DEBUG", "Response: " + response.toString());
-
             try {
                 json = new JSONObject(response.toString());
+                if(json.getString("status").equals("OK")) {
+                    status = "OK";
+                }
+                else {
+                    status = "FAILED";
+                }
             } catch (JSONException j) {
                 error = "Could not parse JSON, " + j.getMessage();
                 Log.d("ERROR", "Couldnt parse JSON. Is it valid?");
+                status = "FAILED";
             }
 
         } catch (Exception e) {
             error = "Could not connect to server: " + e.getLocalizedMessage();
+            status = "FAILED";
 
         } finally {
 
@@ -146,28 +182,17 @@ class saveMatch extends AsyncTask<String, String, JSONObject> {
             }
         }
 
-        // Check if any errors where encountered.
-        String JSONresult;
-        if (error != null) {
-            JSONresult = "{ \"status\" : \" " + status + " \", " +
-                    " \"error\" : \" " + error + " \" }";
-            try {
-                json = new JSONObject(JSONresult.toString());
-            } catch (JSONException j) {
-                error = "Could not convert error message to JSON Object, " + j.getMessage();
-                Log.d("ERROR", "Error parsing JSON Object");
-            }
-        }
-        else {
-            Log.d("DEBUG", error);
-        }
-
-        return json;
+        return status;
     }
 
-    protected void onPostExecute(JSONObject json) {
+    protected void onPostExecute(String s) {
 
-        Log.d("DEBUG", "Response from trying to save match: " + json.toString());
+        if(s.equals("OK")) {
+            Log.d("DEBUG", "Match object saved.");
+        }
+        else {
+            Log.d("DEBUG", "Something went wrong.");
+        }
 
     }
 }

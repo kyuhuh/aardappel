@@ -77,16 +77,9 @@
                 android:text="Current Matches: "
                 android:id="@+id/matchesHeaderText"
                     android:textIsSelectable="false"
-                android:layout_gravity="center_horizontal" />
-
-                <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/refreshButton"
-                android:onClick="onClickMain"
-                android:background="@null"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/refresh" />
+                    android:paddingBottom="10dp" />
+
             </LinearLayout>
 
             <ListView

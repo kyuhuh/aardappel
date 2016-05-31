@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         String ni = j.getString("num_items");
         int num_items = Integer.parseInt(ni) - 1;
         int i = 0;
+        list.clear();
         list = new ArrayList<>();
 
         // For every item in the response create a list item and add it.
@@ -255,11 +256,6 @@ public class MainActivity extends AppCompatActivity {
     public void onClickMain(View view) {
         switch (view.getId()) {
 
-            case R.id.refreshButton:
-                Log.d("DEBUG", "Refresh");
-                new Server().getUserMatches(currentUserID);
-                break;
-
             case R.id.findmatch:
                 //
                 Log.d("DEBUG", "Doe iets met matchmaking...");
@@ -304,6 +300,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
                 MainActivity.this.startActivity(settingsIntent);
+                break;
+            case R.id.action_refresh:
+                Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show();
+                new Server().getUserMatches(currentUserID);
                 break;
         }
         return true;
