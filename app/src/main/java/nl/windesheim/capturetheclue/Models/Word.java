@@ -10,4 +10,12 @@ public class Word {
     public String getWord() {
         return word;
     }
+    public void setWord(String w) { word = w;}
+
+    public int getID() {
+        return id;
+    }
+    public void setID(int i) {
+        id = i;
+    }
 }

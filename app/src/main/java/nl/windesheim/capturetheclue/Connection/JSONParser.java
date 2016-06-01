@@ -144,12 +144,6 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
 
-            // For debug purposes
-            /*for(Pair p : params)
-            {
-                Log.d("PAIR", p.first + " and " + p.second);
-            }*/
-
             //Send request
             DataOutputStream wr = new DataOutputStream (
                     urlConnection.getOutputStream ());

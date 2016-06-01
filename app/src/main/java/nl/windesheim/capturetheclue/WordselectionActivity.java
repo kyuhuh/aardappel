@@ -39,6 +39,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import nl.windesheim.capturetheclue.Models.Match;
+import nl.windesheim.capturetheclue.Models.Word;
+
 public class WordselectionActivity extends AppCompatActivity {
 
     String myJSON;
@@ -49,6 +52,7 @@ public class WordselectionActivity extends AppCompatActivity {
 
 
     JSONArray words;
+    int matchID;
 
     ArrayList<HashMap<String, String>> wordList;
 
@@ -59,14 +63,14 @@ public class WordselectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wordselection);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.logo);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        int matchID;
+
         Bundle extras = getIntent().getExtras();
         matchID = extras.getInt("matchid");
-        Log.d("DEBUG", "Match id is " + matchID);
 
         list = (ListView) findViewById(R.id.listView);
         wordList = new ArrayList<HashMap<String, String>>();
@@ -105,11 +109,20 @@ public class WordselectionActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     String selectedWord = list.getItemAtPosition(position).toString();
                     Log.d("debug", selectedWord);
+                    Log.d("debug", words.toString());
+
+                    Match m = new Match();
+                    m.setID(matchID);
+                    Word w = new Word();
+                    w.setWord(selectedWord);
+                    w.setID(1);
+                    m.setWord(w);
+                    m.setStatus("take_picture1");
+                    m.save();
 
                     Intent gameStartIntent = new Intent(getApplicationContext(), GameFirstActivity.class);
-
-                    // todo: instead of this, save the word to the match (based on ID) and continue to the first photo activity
                     gameStartIntent.putExtra("selectedWord",selectedWord);
+                    gameStartIntent.putExtra("matchId", matchID);
                     startActivity(gameStartIntent);
                 }
             });

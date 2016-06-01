@@ -3,13 +3,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/YellowTint"
+    android:weightSum="1">
 
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
 
         <TextView
@@ -29,7 +33,9 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
 
         <TextView
@@ -52,13 +58,5 @@
         android:text="Sign Out"
         android:id="@+id/logoutButton"
         android:layout_gravity="center_horizontal"
-        android:onClick="onClickMain" />
-
-    <ImageButton
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:id="@+id/backButton"
-        android:background="@android:drawable/ic_media_previous"
-        android:onClick="onClickSettings"
-        />
+        android:onClick="onClickSettings" />
 </LinearLayout>
