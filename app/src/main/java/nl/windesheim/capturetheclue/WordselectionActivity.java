@@ -45,6 +45,8 @@ public class WordselectionActivity extends AppCompatActivity {
 
     private static final String TAG_RESULTS = "result";
     private static final String TAG_WORD = "word";
+    private static final String TAG_ID = "id";
+
 
     JSONArray words;
 
@@ -79,10 +81,12 @@ public class WordselectionActivity extends AppCompatActivity {
             for (int i = 0; i < words.length(); i++) {
                 JSONObject c = words.getJSONObject(i);
                 String word = c.getString(TAG_WORD);
+                String id = c.getString(TAG_ID);
 
                 HashMap<String, String> words = new HashMap<String, String>();
 
                 words.put(TAG_WORD, word);
+                words.put(TAG_ID,id);
 
                 wordList.add(words);
             }
@@ -99,7 +103,6 @@ public class WordselectionActivity extends AppCompatActivity {
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                     String selectedWord = list.getItemAtPosition(position).toString();
                     Log.d("debug", selectedWord);
 

@@ -76,9 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private static Typeface Roboto;
     private static ArrayList<matchListItem> list;
 
-    ImageView imageView;
     File outputFile;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,26 +112,10 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.startActivity(myIntent);
         }
 
-
         new Server().getUserMatches(currentUserID);
 
-
-    //camera
-        imageView = (ImageView) findViewById(R.id.imageView);
-        File storageDir = Environment.getExternalStorageDirectory();
-        outputFile = new File(storageDir, "output.jpg");
     }
 
-    //for camera
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 1001) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 8;
-            Bitmap bitmap = BitmapFactory.decodeFile(outputFile.getAbsolutePath(), options);
-            imageView.setImageBitmap(bitmap);
-        }
-    }
 
     public static void setUserID() {
         // Set userID
@@ -250,7 +232,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
 
-
             case R.id.findmatch:
                 //
                 Log.d("DEBUG", "Doe iets met matchmaking...");
@@ -267,21 +248,23 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.buttonPickCreate:
                 createMatch(1);
-                askSideDialog.dismiss();
+                askSideDialog.dismiss(
+                );
 
                 Log.d("DEBUG", "Clicked start game");
-                //Intent startIntent = new Intent(getApplicationContext(), StartActivity.class);
-                //startActivity(startIntent);
-                setContentView(R.layout.activity_start);
+                Intent wordselecIntent = new Intent(this.getApplicationContext(), WordselectionActivity.class);
+                wordselecIntent.putExtra("matchid", -1);
+                startActivity(wordselecIntent);
                 break;
 
-
+/*
             case R.id.camerabutton:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));
                 startActivityForResult(intent, 1001);
 
                 break;
+                */
 
             case R.id.settings:
                 //
@@ -290,8 +273,16 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(settingsIntent);
                 break;
 
-            case R.id.logoutButton:
+//            case R.id.firstPhoto:
+//                Log.d("DEBUG","First photo button has been clicked.");
+////todo:load camera activity
+//                Intent firstIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                firstIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));
+//                startActivityForResult(firstIntent, 1001);
+//                break;
 
+            case R.id.logoutButton:
+/*
                 Log.d("DEBUG", "Pompompom");
                 Context c = this;
                 settings = c.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -304,15 +295,10 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent myIntent = new Intent(MainActivity.this, Account_Activity.class);
                 //myIntent.putExtra("key", value); //Optional parameters
-                MainActivity.this.startActivity(myIntent);
+                MainActivity.this.startActivity(myIntent);*/
                 break;
 
 
-            case R.id.friendGame:
-                //setContentView(R.layout.activity_friend);
-                Intent friendIntent = new Intent(getApplicationContext(), FriendActivity.class);
-                startActivity(friendIntent);
-                break;
 
             // Moved this into a function:
             /*case R.id.randomGame:

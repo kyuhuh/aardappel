@@ -30,7 +30,6 @@
         <activity android:name=".ClueFirstActivity" />
         <activity android:name=".ClueSecondActivity" />
         <activity android:name=".ClueThirdActivity" />
-        <activity android:name=".FriendActivity" />
         <activity android:name=".GameFirstActivity" />
         <activity android:name=".GameSecondActivity" />
         <activity android:name=".GameThirdActivity" />

@@ -12,5 +12,28 @@
         android:text="New Text"
         android:id="@+id/selectedWordDisplay"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/firstPhoto"
+        android:src="@drawable/activated"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:onClick="onClickFirst"
+        android:layout_below="@+id/imageView"
+        android:layout_toLeftOf="@+id/selectedWordDisplay"
+        android:layout_toStartOf="@+id/selectedWordDisplay" />
+
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/selectedWordDisplay"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:scaleType="fitXY" />
 </RelativeLayout>
