@@ -11,7 +11,8 @@
     tools:context="nl.windesheim.capturetheclue.TestMatchActivity"
     android:contextClickable="false"
     android:gravity="center_horizontal"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@color/YellowTint">
 
     <TextView
         android:layout_width="fill_parent"

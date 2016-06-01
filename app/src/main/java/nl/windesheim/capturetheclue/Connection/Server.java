@@ -122,8 +122,7 @@ public class Server {
                     // Start first picture activity
                     MainActivity.takePicture(m.getID());
                 }
-                else
-                {
+                else if (m.getStatus().equals("game_started")) {
                     TestMatchActivity.startMatch(m);
                     Intent inent = new Intent(MainActivity.mContext, TestMatchActivity.class);
                     MainActivity.mContext.startActivity(inent);

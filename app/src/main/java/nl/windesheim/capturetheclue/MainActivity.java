@@ -180,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("DEBUG", "I have to take a picture");
                     gameStatus = "Your turn: take first picture.";
                 }
+                if (currentObject.getString("game_status").equals("game_started")) {
+                    Log.d("DEBUG", "The game has started");
+                    gameStatus = "Game has started.";
+                }
                 clickable = true;
             }
             if (currentObject.getString("player2name").equals("You")) {
@@ -192,6 +196,10 @@ public class MainActivity extends AppCompatActivity {
                 if (currentObject.getString("game_status").equals("take_picture1")) {
                     Log.d("DEBUG", "Opponent has to take a picture");
                     gameStatus = "Opponent is taking the first picture.";
+                }
+                if (currentObject.getString("game_status").equals("game_started")) {
+                    Log.d("DEBUG", "The game has started");
+                    gameStatus = "Your turn: try to guess the word.";
                 }
                 clickable = false;
             }
@@ -236,6 +244,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onClickMain(View view) {
+        switch (view.getId()) {
 
     public void onClickMain(View view) {
         switch (view.getId()) {
@@ -257,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.buttonPickCreate:
                 createMatch(1);
+<<<<<<< HEAD
 
                 askSideDialog.dismiss(
                 );
@@ -265,6 +276,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent wordselecIntent = new Intent(this.getApplicationContext(), WordselectionActivity.class);
                 wordselecIntent.putExtra("matchid", -1);
                 startActivity(wordselecIntent);
+=======
+                askSideDialog.dismiss();
+                showStartedDialog();
+                break;
+>>>>>>> origin/kyu
 
                 askSideDialog.dismiss();
                 showStartedDialog();
@@ -281,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
                 */
 
 
+<<<<<<< HEAD
             case R.id.settings:
                 //
                 Log.d("DEBUG", "Clicked settings");
@@ -315,13 +332,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+=======
+>>>>>>> origin/kyu
             case R.id.friendGame:
                 //setContentView(R.layout.activity_friend);
                 Intent friendIntent = new Intent(getApplicationContext(), FriendActivity.class);
                 startActivity(friendIntent);
                 break;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/kyu
         }
     }
 
