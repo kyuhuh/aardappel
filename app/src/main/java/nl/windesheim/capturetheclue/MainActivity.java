@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
         String ni = j.getString("num_items");
         int num_items = Integer.parseInt(ni) - 1;
         int i = 0;
-        list.clear();
         list = new ArrayList<>();
 
         // For every item in the response create a list item and add it.
@@ -197,6 +196,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("DEBUG", "I have to take a picture");
                     gameStatus = "Your turn: take first picture.";
                 }
+                if (currentObject.getString("game_status").equals("game_started")) {
+                    Log.d("DEBUG", "The game has started");
+                    gameStatus = "Game has started.";
+                }
                 clickable = true;
             }
             if (currentObject.getString("player2name").equals("You")) {
@@ -209,6 +212,10 @@ public class MainActivity extends AppCompatActivity {
                 if (currentObject.getString("game_status").equals("take_picture1")) {
                     Log.d("DEBUG", "Opponent has to take a picture");
                     gameStatus = "Opponent is taking the first picture.";
+                }
+                if (currentObject.getString("game_status").equals("game_started")) {
+                    Log.d("DEBUG", "The game has started");
+                    gameStatus = "Your turn: try to guess the word.";
                 }
                 clickable = false;
             }

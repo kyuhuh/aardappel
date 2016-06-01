@@ -49,6 +49,11 @@ public class TestMatchActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_test_match);
         mContext = this;
 
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         TextView nButton;
         Typeface Roboto = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
 
@@ -74,7 +79,6 @@ public class TestMatchActivity extends AppCompatActivity implements View.OnClick
             nButton.setTextColor(Color.WHITE);
             nButton.setId(i);
             i++;
-            Log.d("Debug", "Id is " + i);
             nButton.setOnClickListener(this);
             nButton.setBackgroundResource(R.drawable.button);
             nButton.setLayoutParams(new ViewGroup.LayoutParams(40, 40));
@@ -132,22 +136,26 @@ public class TestMatchActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    // Function that is called when all letters are chosen
     public void checkWord() {
         ClueDialog d;
+        // The word is correct
         if (inputString.equalsIgnoreCase(currentMatch.getWord())) {
-            Log.d("Debug", "");
             d = new ClueDialog(this);
             d.setImage(R.drawable.nice01);
             d.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     // todo: save the match as ended
+                    currentMatch.setStatus("game_finished");
+                    currentMatch.save();
                     Intent myIntent = new Intent(TestMatchActivity.this, MainActivity.class);
                     startActivity(myIntent);
                 }
             });
-        } else {
-            Log.d("Debug", "Nope!");
+        }
+        // It's not correct
+        else {
             d = new ClueDialog(this);
             resetLetters();
         }

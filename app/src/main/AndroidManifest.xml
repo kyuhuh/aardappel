@@ -36,7 +36,8 @@
         <activity android:name=".GameThirdActivity" />
         <activity android:name=".GameSentAllActivity" />
         <activity android:name=".Account_Activity" />
-        <activity android:name=".TestMatchActivity" />
+        <activity android:name=".TestMatchActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".PlayActivity" />
         <activity
             android:name=".WordselectionActivity"
