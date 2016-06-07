@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -71,8 +72,14 @@ public class GameFirstActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("selectedWord");
+            String[] parts = value.split(",");
+            String part2 = parts[1];
+            String newValue1 = part2.replaceAll("word=", " ");
+            newValue1 = newValue1.substring(0,newValue1.length()-1);
             Log.d("DEBUG",value);
-            selectedWordDisplay.setText(value);
+            Log.d("DEBUG",newValue1);
+
+            selectedWordDisplay.setText(newValue1);
         }
 
         //SAVE DATA TO THE LOCAL STORAGE
@@ -123,11 +130,28 @@ public class GameFirstActivity extends AppCompatActivity {
         startActivityForResult(cameraIntent, SEND_IMAGE_REQUEST);
     }
 
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        switch (keyCode) {
+//            case KeyEvent.KEYCODE_BACK:
+//                //Your action on press back here
+//                onBackPressed();
+//                return true;
+//            default:
+//                return super.onKeyDown(keyCode, event);
+//        }
+//    }
+
+
+    @Override
+    public void onBackPressed() {
+    }
+
     //SHOW PHOTO ON THE IMAGE VIEW
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.d("DEBUG", requestCode + "  " + resultCode);
         //if (requestCode == SEND_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
         if(showFileOG != null) {
             try {
@@ -138,6 +162,7 @@ public class GameFirstActivity extends AppCompatActivity {
             }
         }
     }
+
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
