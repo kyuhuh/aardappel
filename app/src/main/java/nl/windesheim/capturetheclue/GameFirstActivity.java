@@ -34,6 +34,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Set;
 
 public class GameFirstActivity extends AppCompatActivity {
 
@@ -50,7 +51,8 @@ public class GameFirstActivity extends AppCompatActivity {
 
     private int SEND_IMAGE_REQUEST = 1;
 
-    private Bitmap bitmap;
+    public static Bitmap bitmap;
+    public String theFileName;
 
     private Uri filePath;
 
@@ -93,6 +95,7 @@ public class GameFirstActivity extends AppCompatActivity {
                 calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
         String path = mRootPath + "/" + FileName;
         outputFile = new File(mRootPath, FileName);
+//        theFileName = outputFile.toString();
         setShowFile(outputFile);
     }
 
@@ -106,9 +109,9 @@ public class GameFirstActivity extends AppCompatActivity {
             case R.id.sendFirstPhoto:
                 Log.d("DEBUG", "Send button has been clicked.");
 //                uploadImage();
-                uploadPhoto(bitmap);
+                uploadPhoto();
                 setContentView(R.layout.activity_gamefirstuploaded);
-                Log.d("DEBUG", "image uploading... ?????");
+//                Log.d("DEBUG", "image uploading... ?????");
                 break;
         }
     }
@@ -135,14 +138,20 @@ public class GameFirstActivity extends AppCompatActivity {
             }
         }
     }
-//
-//    public String getStringImage(Bitmap bmp){
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, bao);
+        byte [] ba = bao.toByteArray();
+        String ba1 = Base64.encodeToString(ba, Base64.DEFAULT);
+        Log.d("METHOD GETSTRINGIMAGE", "BAL1"); //WORKED!!!
+        return ba1;
 //        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 //        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 //        byte[] imageBytes = baos.toByteArray();
 //        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 //        return encodedImage;
-//    }
+    }
 //
 //    private void uploadImage() {
 //        class UploadImage extends AsyncTask<Bitmap, Void, String> {
@@ -178,93 +187,41 @@ public class GameFirstActivity extends AppCompatActivity {
 //        }
 //    }
 
-    private void uploadPhoto(final Bitmap bitmap){
-
+    private void uploadPhoto(){
         Thread thread = new Thread(new Runnable() {
-
             public void run() {
-                ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bao);
-                byte [] ba = bao.toByteArray();
-                String ba1 = Base64.encodeToString(ba, Base64.DEFAULT);
+                String uploadImage=getStringImage(bitmap); //NullPointerException
+
                 ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                nameValuePairs.add(new BasicNameValuePair("image", ba1));
+                nameValuePairs.add(new BasicNameValuePair("image", uploadImage));
+//                nameValuePairs.add(new BasicNameValuePair("filename", theFileName));
+
                 try {
                     HttpClient client = new DefaultHttpClient();
-                    HttpPost post = new HttpPost("http://http://patatjes.esy.es/upload.php");
+                    HttpPost post = new HttpPost("http://patatjes.esy.es/upload.php");
                     post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = client.execute(post);
                     //HttpEntity entity = response.getEntity();
 
                 } catch (UnsupportedEncodingException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (ClientProtocolException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-
             }
         });
         thread.start();
-        Log.d("DEBUG", "it works?");
     }
-
-
-
-    /*
-    try {
-
-     FTPClient mFTP = new FTPClient();
-
-     mFTP.connect("123.123.123.123", 21);  // ftp로 접속
-     mFTP.login("ftpuser", "password"); // ftp 로그인 계정/비번
-     mFTP.setFileType(FTP.BINARY_FILE_TYPE); // 바이너리 파일
-     mFTP.setBufferSize(1024 * 1024); // 버퍼 사이즈
-     mFTP.enterLocalPassiveMode(); 패시브 모드로 접속
-
-
-
-    // 업로드 경로 수정 (선택 사항 )
-
-     mFTP.cwd("public"); // ftp 상의 업로드 디렉토리
-     mFTP.mkd("files"); // public아래로 files 디렉토리를 만든다
-     mFTP.cwd("files"); // public/files 로 이동 (이 디렉토리로 업로드가 진행)
-
-
-     File path = new File("/sdcard/dcim/camera/"); // 업로드 할 파일이 있는 경로(예제는 sd카드 사진 폴더)
-     if (path.listFiles().length > 0) { // 폴더를 가지고와 폴더 내부 파일 리스트를 만든다
-          for (File file : path.listFiles()) {
-               if (file.isFile()) {
-                    FileInputStream ifile = new FileInputStream(file)
-
-                    mFTP.rest(file.getName());  // ftp에 해당 파일이있다면 이어쓰기
-
-                    mFTP.appendFile(file.getName(), ifile); // ftp 해당 파일이 없다면 새로쓰기
-               }
-          }
-     }
-
-     mFTP.disconnect(); // ftp disconnect
-
-     } catch (SocketException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-     } catch (IOException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-     }
-}
-     */
 
     public void setShowFile(File file){
         this.showFile = file;
     }
 
-    public void setShowFileOG(File file){
-        this.showFileOG = file;
+    public File setShowFileOG(File file){
+        return this.showFileOG = file;
     }
+
+
 }
