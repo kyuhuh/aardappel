@@ -27,6 +27,18 @@
         android:layout_toLeftOf="@+id/selectedWordDisplay"
         android:layout_toStartOf="@+id/selectedWordDisplay" />
 
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/sendFirstPhoto"
+        android:src="@drawable/coloured_send"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:onClick="onClickFirst"
+        android:layout_below="@+id/imageView"
+        android:layout_toRightOf="@+id/selectedWordDisplay"
+        android:layout_toEndOf="@+id/selectedWordDisplay" />
+
     <ImageView
         android:layout_width="350dp"
         android:layout_height="350dp"

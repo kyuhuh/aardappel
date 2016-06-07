@@ -158,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
         String ni = j.getString("num_items");
         int num_items = Integer.parseInt(ni) - 1;
         int i = 0;
-        list.clear();
         list = new ArrayList<>();
 
         // For every item in the response create a list item and add it.
@@ -244,8 +243,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClickMain(View view) {
-        switch (view.getId()) {
 
     public void onClickMain(View view) {
         switch (view.getId()) {
@@ -263,11 +260,11 @@ public class MainActivity extends AppCompatActivity {
                 createMatch(0);
                 askSideDialog.dismiss();
                 showStartedDialog();
+                Log.d("DEBUG","Clicked guess");
                 break;
 
             case R.id.buttonPickCreate:
                 createMatch(1);
-<<<<<<< HEAD
 
                 askSideDialog.dismiss(
                 );
@@ -276,74 +273,22 @@ public class MainActivity extends AppCompatActivity {
                 Intent wordselecIntent = new Intent(this.getApplicationContext(), WordselectionActivity.class);
                 wordselecIntent.putExtra("matchid", -1);
                 startActivity(wordselecIntent);
-=======
-                askSideDialog.dismiss();
-                showStartedDialog();
-                break;
->>>>>>> origin/kyu
 
                 askSideDialog.dismiss();
                 showStartedDialog();
-
                 break;
 
-/*
-            case R.id.camerabutton:
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));
-                startActivityForResult(intent, 1001);
-
-                break;
-                */
-
-
-<<<<<<< HEAD
-            case R.id.settings:
-                //
-                Log.d("DEBUG", "Clicked settings");
-                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                MainActivity.this.startActivity(settingsIntent);
-                break;
-
-//            case R.id.firstPhoto:
-//                Log.d("DEBUG","First photo button has been clicked.");
-////todo:load camera activity
-//                Intent firstIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                firstIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile));
-//                startActivityForResult(firstIntent, 1001);
-//                break;
 
             case R.id.logoutButton:
-/*
-                Log.d("DEBUG", "Pompompom");
-                Context c = this;
-                settings = c.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = settings.edit();
-
-                editor.clear();
-                editor.commit();
-                loggedIn = false;
-                currentUserID = -1;
-
-                Intent myIntent = new Intent(MainActivity.this, Account_Activity.class);
-                //myIntent.putExtra("key", value); //Optional parameters
-                MainActivity.this.startActivity(myIntent);*/
                 break;
 
 
-
-=======
->>>>>>> origin/kyu
             case R.id.friendGame:
                 //setContentView(R.layout.activity_friend);
                 Intent friendIntent = new Intent(getApplicationContext(), FriendActivity.class);
                 startActivity(friendIntent);
                 break;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/kyu
         }
     }
 
