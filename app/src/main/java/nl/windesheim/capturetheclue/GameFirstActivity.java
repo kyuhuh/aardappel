@@ -17,10 +17,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -94,7 +105,8 @@ public class GameFirstActivity extends AppCompatActivity {
 
             case R.id.sendFirstPhoto:
                 Log.d("DEBUG", "Send button has been clicked.");
-                uploadImage();
+//                uploadImage();
+                uploadPhoto(bitmap);
                 setContentView(R.layout.activity_gamefirstuploaded);
                 Log.d("DEBUG", "image uploading... ?????");
                 break;
@@ -123,48 +135,130 @@ public class GameFirstActivity extends AppCompatActivity {
             }
         }
     }
+//
+//    public String getStringImage(Bitmap bmp){
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//        byte[] imageBytes = baos.toByteArray();
+//        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+//        return encodedImage;
+//    }
+//
+//    private void uploadImage() {
+//        class UploadImage extends AsyncTask<Bitmap, Void, String> {
+//
+//            ProgressDialog loading;
+//            RequestHandler rh = new RequestHandler();
+//
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//                loading = ProgressDialog.show(GameFirstActivity.this, "Uploading Image", "Please wait...", true, true);
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String s) {
+//                super.onPostExecute(s);
+//                loading.dismiss();
+//                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            protected String doInBackground(Bitmap... params) {
+//                Bitmap bitmap = params[0];
+//                String uploadImage = getStringImage(bitmap);
+//
+//                HashMap<String, String> data = new HashMap<>();
+//                data.put(UPLOAD_KEY, uploadImage);
+//
+//                String result = rh.sendPostRequest(UPLOAD_URL, data);
+//
+//                return result;
+//            }
+//        }
+//    }
 
-    public String getStringImage(Bitmap bmp){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
+    private void uploadPhoto(final Bitmap bitmap){
+
+        Thread thread = new Thread(new Runnable() {
+
+            public void run() {
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+                byte [] ba = bao.toByteArray();
+                String ba1 = Base64.encodeToString(ba, Base64.DEFAULT);
+                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("image", ba1));
+                try {
+                    HttpClient client = new DefaultHttpClient();
+                    HttpPost post = new HttpPost("http://http://patatjes.esy.es/upload.php");
+                    post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                    HttpResponse response = client.execute(post);
+                    //HttpEntity entity = response.getEntity();
+
+                } catch (UnsupportedEncodingException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (ClientProtocolException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        thread.start();
+        Log.d("DEBUG", "it works?");
     }
 
-    private void uploadImage() {
-        class UploadImage extends AsyncTask<Bitmap, Void, String> {
 
-            ProgressDialog loading;
-            RequestHandler rh = new RequestHandler();
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(GameFirstActivity.this, "Uploading Image", "Please wait...", true, true);
-            }
+    /*
+    try {
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-            }
+     FTPClient mFTP = new FTPClient();
 
-            @Override
-            protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
+     mFTP.connect("123.123.123.123", 21);  // ftp로 접속
+     mFTP.login("ftpuser", "password"); // ftp 로그인 계정/비번
+     mFTP.setFileType(FTP.BINARY_FILE_TYPE); // 바이너리 파일
+     mFTP.setBufferSize(1024 * 1024); // 버퍼 사이즈
+     mFTP.enterLocalPassiveMode(); 패시브 모드로 접속
 
-                HashMap<String, String> data = new HashMap<>();
-                data.put(UPLOAD_KEY, uploadImage);
 
-                String result = rh.sendPostRequest(UPLOAD_URL, data);
 
-                return result;
-            }
-        }
-    }
+    // 업로드 경로 수정 (선택 사항 )
+
+     mFTP.cwd("public"); // ftp 상의 업로드 디렉토리
+     mFTP.mkd("files"); // public아래로 files 디렉토리를 만든다
+     mFTP.cwd("files"); // public/files 로 이동 (이 디렉토리로 업로드가 진행)
+
+
+     File path = new File("/sdcard/dcim/camera/"); // 업로드 할 파일이 있는 경로(예제는 sd카드 사진 폴더)
+     if (path.listFiles().length > 0) { // 폴더를 가지고와 폴더 내부 파일 리스트를 만든다
+          for (File file : path.listFiles()) {
+               if (file.isFile()) {
+                    FileInputStream ifile = new FileInputStream(file)
+
+                    mFTP.rest(file.getName());  // ftp에 해당 파일이있다면 이어쓰기
+
+                    mFTP.appendFile(file.getName(), ifile); // ftp 해당 파일이 없다면 새로쓰기
+               }
+          }
+     }
+
+     mFTP.disconnect(); // ftp disconnect
+
+     } catch (SocketException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+     } catch (IOException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+     }
+}
+     */
 
     public void setShowFile(File file){
         this.showFile = file;
