@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="2dip"
         android:textStyle="bold"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:textColor="#03C4FF"
+        android:gravity="center" />
 
 </LinearLayout>

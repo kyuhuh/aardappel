@@ -1,18 +1,27 @@
 package nl.windesheim.capturetheclue;
 
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.ColorRes;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 
 import org.apache.http.HttpEntity;
@@ -63,10 +72,18 @@ public class WordselectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wordselection);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        SpannableString s = new SpannableString("Capture the Clue");
+        s.setSpan(new nl.windesheim.capturetheclue.TypefaceSpan(this, "olivier_demo.ttf"), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SpannableString sb = new SpannableString("Choose the word!");
+        sb.setSpan(new nl.windesheim.capturetheclue.TypefaceSpan(this, "olivier_demo.ttf"), 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Update the action bar title with the TypefaceSpan instance
+        getSupportActionBar().setTitle(s);
+        getSupportActionBar().setSubtitle(sb);
 
 
         Bundle extras = getIntent().getExtras();
@@ -76,6 +93,7 @@ public class WordselectionActivity extends AppCompatActivity {
         wordList = new ArrayList<HashMap<String, String>>();
         getData("http://patatjes.esy.es/words.php");
     }
+
 
     protected void showList() {
         try {
@@ -170,82 +188,4 @@ public class WordselectionActivity extends AppCompatActivity {
         GetDataJSON g = new GetDataJSON();
         g.execute(url);
     }
-
-
-
-
-
-    // post text to server
-
-    /*
-    public class PostDataAsyncTask extends AsyncTask<String, String, String> {
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // do stuff before posting data
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                // 1 = post text data, 2 = post file
-                int actionChoice = 2;
-
-                // post a text data
-                if(actionChoice==1){
-                    postText();
-                }
-
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String lenghtOfFile) {
-            // do stuff after posting data
-        }
-    }
-
-    // this will post our text data
-    private void postText(){
-        try{
-            // url where the data will be posted
-            String postReceiverUrl = "http://patatjes.esy.es/post.php";
-            Log.d("debug", "postURL: " + postReceiverUrl);
-
-            // HttpClient
-            HttpClient httpClient = new DefaultHttpClient();
-
-            // post header
-            HttpPost httpPost = new HttpPost(postReceiverUrl);
-
-            // add your data
-            List<NameValuePair> selectedWords = new ArrayList<NameValuePair>(2);
-            selectedWords.add(new BasicNameValuePair("word", "Mike"));
-
-            httpPost.setEntity(new UrlEncodedFormEntity(selectedWords));
-
-            // execute HTTP post request
-            HttpResponse response = httpClient.execute(httpPost);
-            HttpEntity resEntity = response.getEntity();
-
-            if (resEntity != null) {
-
-                String responseStr = EntityUtils.toString(resEntity).trim();
-                Log.v("debug", "Response: " +  responseStr);
-
-                // you can add an if statement here and do other actions based on the response
-            }
-
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
 }

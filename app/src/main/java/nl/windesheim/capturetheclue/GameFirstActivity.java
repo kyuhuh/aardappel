@@ -1,15 +1,20 @@
 package nl.windesheim.capturetheclue;
 
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,6 +42,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
+import nl.windesheim.capturetheclue.TypefaceSpan;
+
 public class GameFirstActivity extends AppCompatActivity {
 
     public static File outputFile;
@@ -47,15 +54,9 @@ public class GameFirstActivity extends AppCompatActivity {
     String mRootPath;
     static final String PICFOLDER = "CaptureTheClue";
 
-    public static final String UPLOAD_URL = "http://http://patatjes.esy.es/upload.php";
-    public static final String UPLOAD_KEY = "image";
-
     private int SEND_IMAGE_REQUEST = 1;
 
     public static Bitmap bitmap;
-    public String theFileName;
-
-    private Uri filePath;
 
 
     @Override
@@ -63,7 +64,24 @@ public class GameFirstActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamefirst);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        SpannableString s = new SpannableString("Capture the Clue");
+        s.setSpan(new TypefaceSpan(GameFirstActivity.this, "olivier_demo.ttf"), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SpannableString sb = new SpannableString("Take a picture!");
+        sb.setSpan(new TypefaceSpan(GameFirstActivity.this, "olivier_demo.ttf"), 0, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setTitle(s);
+        getSupportActionBar().setSubtitle(sb);
+
+
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/olivier_demo.ttf");
         selectedWordDisplay = (TextView)findViewById(R.id.selectedWordDisplay);
+        selectedWordDisplay.setTypeface(typeFace);
+
+
         imageView = (ImageView) findViewById(R.id.imageView);
 //        String username = settings.getString("username", "not_found");
 //        userNameDisplay.setText(username);
@@ -102,7 +120,6 @@ public class GameFirstActivity extends AppCompatActivity {
                 calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
         String path = mRootPath + "/" + FileName;
         outputFile = new File(mRootPath, FileName);
-//        theFileName = outputFile.toString();
         setShowFile(outputFile);
     }
 
@@ -115,10 +132,8 @@ public class GameFirstActivity extends AppCompatActivity {
 
             case R.id.sendFirstPhoto:
                 Log.d("DEBUG", "Send button has been clicked.");
-//                uploadImage();
                 uploadPhoto();
                 setContentView(R.layout.activity_gamefirstuploaded);
-//                Log.d("DEBUG", "image uploading... ?????");
                 break;
         }
     }
@@ -129,19 +144,6 @@ public class GameFirstActivity extends AppCompatActivity {
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(showFile));
         startActivityForResult(cameraIntent, SEND_IMAGE_REQUEST);
     }
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        switch (keyCode) {
-//            case KeyEvent.KEYCODE_BACK:
-//                //Your action on press back here
-//                onBackPressed();
-//                return true;
-//            default:
-//                return super.onKeyDown(keyCode, event);
-//        }
-//    }
-
 
     @Override
     public void onBackPressed() {
@@ -171,46 +173,7 @@ public class GameFirstActivity extends AppCompatActivity {
         String ba1 = Base64.encodeToString(ba, Base64.DEFAULT);
         Log.d("METHOD GETSTRINGIMAGE", "BAL1"); //WORKED!!!
         return ba1;
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//        byte[] imageBytes = baos.toByteArray();
-//        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-//        return encodedImage;
     }
-//
-//    private void uploadImage() {
-//        class UploadImage extends AsyncTask<Bitmap, Void, String> {
-//
-//            ProgressDialog loading;
-//            RequestHandler rh = new RequestHandler();
-//
-//            @Override
-//            protected void onPreExecute() {
-//                super.onPreExecute();
-//                loading = ProgressDialog.show(GameFirstActivity.this, "Uploading Image", "Please wait...", true, true);
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//                loading.dismiss();
-//                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            protected String doInBackground(Bitmap... params) {
-//                Bitmap bitmap = params[0];
-//                String uploadImage = getStringImage(bitmap);
-//
-//                HashMap<String, String> data = new HashMap<>();
-//                data.put(UPLOAD_KEY, uploadImage);
-//
-//                String result = rh.sendPostRequest(UPLOAD_URL, data);
-//
-//                return result;
-//            }
-//        }
-//    }
 
     private void uploadPhoto(){
         Thread thread = new Thread(new Runnable() {

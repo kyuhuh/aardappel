@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ClueAnswerActivity" />
-        <activity android:name=".ClueFirstActivity" />
+        <activity android:name=".ClueFirstActivity"/>
         <activity android:name=".ClueSecondActivity" />
         <activity android:name=".ClueThirdActivity" />
         <activity android:name=".GameFirstActivity" />
