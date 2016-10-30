@@ -1,3 +1,4 @@
+
 package nl.windesheim.capturetheclue;
 
 import android.app.Activity;

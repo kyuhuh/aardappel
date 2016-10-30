@@ -3,9 +3,7 @@ package nl.windesheim.capturetheclue.Account;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by Peter on 4/7/2016.
- */
+
 public class User {
 
     public String username;

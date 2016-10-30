@@ -19,9 +19,7 @@ import java.util.List;
 
 import nl.windesheim.capturetheclue.R;
 
-/**
- * Created by Peter on 5/17/2016.
- */
+
 public class matchListItemAdapter extends ArrayAdapter<matchListItem> {
 
     matchListItem match;

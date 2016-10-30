@@ -38,9 +38,6 @@ import nl.windesheim.capturetheclue.Models.Picture;
 import nl.windesheim.capturetheclue.TestMatchActivity;
 import nl.windesheim.capturetheclue.WordselectionActivity;
 
-/**
- * Created by Peter on 4/6/2016.
- */
 public class Server {
 
     //static final String SERVER_URL = "http://46.129.41.143:666";  // Remote server, doesnt work from Windesheim
@@ -61,7 +58,6 @@ public class Server {
     }
 
     public static void setLoginCredentials(JSONObject user) {
-
         try {
             if (user != null) {
                 Log.d("DUMP", user.getString("status"));
@@ -85,7 +81,7 @@ public class Server {
             Account_Activity.showPopup("Could not log in, server didn't respond on time. Please try again later.");
         }
         Account_Activity.progDia.hide();
-        }
+    }
 
     public static void getUserMatches(int id) {
         Log.d("Debug", "Retrieving matches for user [SERVER.java]");

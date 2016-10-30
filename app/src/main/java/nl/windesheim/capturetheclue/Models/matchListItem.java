@@ -3,9 +3,7 @@ package nl.windesheim.capturetheclue.Models;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-/**
- * Created by Peter on 5/17/2016.
- */
+
 public class matchListItem {
 
     private int avatar;

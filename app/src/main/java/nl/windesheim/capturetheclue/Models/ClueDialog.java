@@ -13,9 +13,7 @@ import org.w3c.dom.Text;
 
 import nl.windesheim.capturetheclue.R;
 
-/**
- * Created by Peter on 4/19/2016.
- */
+
 public class ClueDialog extends Dialog implements View.OnClickListener {
 
     ImageView img;

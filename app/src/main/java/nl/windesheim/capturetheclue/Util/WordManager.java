@@ -6,9 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Peter on 3/15/2016.
- */
 public class WordManager {
 
     private ArrayList<String> wordlist;
