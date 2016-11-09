@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@color/YellowTint" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingBottom="@dimen/activity_vertical_margin" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="30.0dip"
+        android:id="@id/selectedWordDisplay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="142.0dip">
+        <ImageView android:id="@id/image1View"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/activated"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_column="1"
+            android:layout_weight="0.5"
+            android:layout_below="@id/wordTextView"
+            android:layout_centerHorizontal="true"
+            android:onClick="onClickFirst"
+            android:layout_row="1" />
+        <ImageView android:id="@id/image2View"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/activated"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_column="3"
+            android:layout_weight="0.5"
+            android:layout_below="@id/wordTextView"
+            android:layout_centerHorizontal="true"
+            android:onClick="onClickFirst"
+            android:layout_row="1" />
+    </LinearLayout>
+    <LinearLayout android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="152.0dip"
+        android:weightSum="1.0">
+        <ImageView android:id="@id/image3View"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/activated"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_column="2"
+            android:layout_weight="0.5"
+            android:layout_below="@id/wordTextView"
+            android:layout_centerHorizontal="true"
+            android:onClick="onClickFirst"
+            android:layout_row="2" />
+    </LinearLayout>
+    <Button android:layout_gravity="center_horizontal"
+        android:id="@id/button"
+        android:background="@drawable/choose_word_yellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Clue"
+        android:onClick="onClickFirst" />
+    <ImageView android:id="@id/expanded_image"
+        android:visibility="invisible"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:contentDescription="Zoomzoom" />
+</LinearLayout>

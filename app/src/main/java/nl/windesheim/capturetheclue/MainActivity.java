@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         String username = settings.getString("username", "not_found");
         userNameDisplay.setTypeface(Roboto);
         userNameDisplay.setText(username);
+
         TextView matchesHeader = (TextView) findViewById(R.id.matchesHeaderText);
         matchesHeader.setTypeface(Roboto);
         Button startGame = (Button) findViewById(R.id.findmatch);
