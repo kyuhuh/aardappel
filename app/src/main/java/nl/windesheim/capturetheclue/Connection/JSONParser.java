@@ -15,6 +15,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -24,12 +25,14 @@ import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.*;
 
 import nl.windesheim.capturetheclue.MainActivity;
 import nl.windesheim.capturetheclue.TestMatchActivity;
 
-
+//JSON PARSER 작동안하는듯함
 public class JSONParser extends AsyncTask<String, String, JSONObject> {
 
     HttpURLConnection urlConnection;
@@ -72,7 +75,7 @@ public class JSONParser extends AsyncTask<String, String, JSONObject> {
         String JSONresult;
         if(error != null) {
             JSONresult = "{ \"status\" : \" " + status + " \"}";
-            //Log.d("STRING TEST", JSONresult);
+            Log.d("STRING TEST!!!!!! ", JSONresult);
         }
         else {
             JSONresult = result.toString();
@@ -90,14 +93,11 @@ public class JSONParser extends AsyncTask<String, String, JSONObject> {
     }
 
     protected void onPostExecute(JSONObject json) {
-
         //Do something with the JSON string
         Log.d("SERVER RESPONSE", json.toString());
-        Server.setResult(json);
+        Server.setResult(json); //null point exception
 
     }
-
-
 }
 
 
@@ -118,6 +118,7 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
     protected JSONObject doInBackground(String... args) {
 
         Log.d("DEBUG", "Trying to log in...");
+        Log.d("DEBUG","★ DoLogin checked");
         StringBuilder result = new StringBuilder();
         String status = "";
         String error = null;
@@ -125,10 +126,11 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
 
         // Try to connect to the server, if it doesnt set status accordingly.
         try {
-
+            Log.d("DEBUG","★ Connection checking");
             // Connection part
             URL url = new URL(Server.SERVER_URL + "/login.php");
             urlConnection = (HttpURLConnection) url.openConnection();
+            Log.d("DEBUG","★ "+urlConnection.toString());
 
             List<Pair> params = new ArrayList<Pair>();
             params.add(new Pair("user", pass));
@@ -144,16 +146,22 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
 
             //Send request
             DataOutputStream wr = new DataOutputStream (urlConnection.getOutputStream ());
-            wr.writeBytes (Server.getQuery(params));
+            wr.writeBytes (Server.getQuery(params)); //params를 전달하지 않음
+            Log.d("★DEBUG","SERVER.GETQUERY BLAH BLAH   "+Server.getQuery(params).toString());
             wr.flush ();
             wr.close ();
+            Log.d("DEBUG", "send request end");
+
 
             // Response part //이부분이 안도는것같다
+            /*
             InputStream is = urlConnection.getInputStream();
+            Log.d("DEBUG","ONE MORE TIME");
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             String line;
             while((line = rd.readLine()) != null) {
+                Log.d("DEBUG", line);
                 response.append(line);
                 response.append('\r');
             }
@@ -164,29 +172,75 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
             error = "Could not connect to server: " + e.getMessage();
             e.printStackTrace();
         } finally {
+//            Log.d("DEBUG", error);
             if (urlConnection != null) {
                 urlConnection.disconnect();
                 Log.d("DEBUG","disconnected");
             }
         }
+        */
+            //added on 01:07 09-nov-16
+            InputStream is = urlConnection.getInputStream();
+            int nullcheck = is.available();
+            Log.d("DEBUG","inputstream null check " +nullcheck);
+            StringBuffer response = new StringBuffer(urlConnection.getResponseMessage());
+            Log.d("DEBUG","- server - StringBuffer response : "+response.toString());
+
+            BufferedReader rd = new BufferedReader (new InputStreamReader(is)); //inside rd is nothing
+//            Log.d("DEBUG","- server "+Util.streamToString(is));
+
+            StringBuffer sb = new StringBuffer("");
+            String line = "";
+
+            while ((line = rd.readLine())!=null){
+                sb.append(line);
+            }
+            rd.close();
+            status=sb.toString();
+            Log.d("DEBUG"," - server - status : "+status);
+
+            //return response.toString();
+            Log.d("DEBUG", "Server response: " + response.toString()); //reslonse: OK
+            rd.close();
+        }
+        //catch (Exception e) {
+        catch (IOException e) {
+            error = "Could not connect to server: " + e.getMessage();
+            Log.d("DEBUG","♥♥♥♥♥♥catch error♥♥♥♥♥♥: "+error);
+            e.printStackTrace();
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+                Log.d("DEBUG","disconnected");
+            }
+        }
+//        Log.d("DEBUG", error);
 
         // Check if any errors where encountered.
         //dunno why json is null, what should jason be?
-        String JSONresult;
-        if(error != null) {
-            JSONresult = "{ \"status\" : \" " + status + " \"}";
-            try {
-                json = new JSONObject(JSONresult.toString());
-//                return json;
-            } catch (JSONException j) {
-                error = "Could not convert error message to JSON Object, " + j.getMessage();
-                Log.d("ERROR", "Error parsing JSON Object");
-            }
-        }
+        String JSONresult="";
+        Log.d("DEBUG","ERROR? "+error);
 
-        Log.d("DEBUG",json.toString()+"*****this is above return gggggggggggggggg");
-        return json;
+
+//error is null, this if statement doesnt work
+        if(error != null) {
+        JSONresult = "{ \"status\" : \" " + status + " \"}";
+            Log.d("DEBUG","\"{ \\\"status\\\" : \\\" \" + status + \" \\\"}\" "+JSONresult.toString());
+        try {
+            json = new JSONObject(JSONresult.toString());
+            Log.d("DEBUG","error!=null json: "+json.toString());
+            return json;
+        } catch (JSONException j) {
+            error = "Could not convert error message to JSON Object, " + j.getMessage();
+            Log.d("ERROR", "Error parsing JSON Object");
+        }
+        Log.d("DEBUG","ERROR IF NULL? "+error);
     }
+    Log.d("DEBUG","ERROR SECOND? "+error);
+
+    Log.d("DEBUG",json.toString()+"*****this is above return gggggggggggggggg");
+    return json;
+}
 
     protected void onPostExecute(JSONObject json) {
 
@@ -194,6 +248,12 @@ class DoLogin extends AsyncTask<String, String, JSONObject> {
         //Do something with the JSON string
         if(json != null) {
                 Server.setLoginCredentials(json);
+            //json is null
+            //json is user
+            //user is null
+            //so it doesnt login
+
+            //make jason works
         }
 
     }
@@ -232,6 +292,7 @@ class retrieveMatch extends AsyncTask<String, String, JSONObject> {
 
             urlConnection = (HttpURLConnection) url.openConnection();
             //urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
 
@@ -381,6 +442,7 @@ class retrieveMatchesForUser extends AsyncTask<String, String, JSONObject> {
 
             urlConnection = (HttpURLConnection) url.openConnection();
             //urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
 
@@ -483,6 +545,7 @@ class startNewMatch extends AsyncTask<String, String, JSONObject> {
             Log.d("Debug", url.toString());
 
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("POST");
             //urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");

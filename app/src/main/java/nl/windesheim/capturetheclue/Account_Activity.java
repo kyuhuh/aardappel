@@ -56,8 +56,11 @@ public class Account_Activity extends AppCompatActivity {
                 // Some debug
                 Log.d("Debug", "Logging in...");
                 Log.d("Debug", "User " + email + " with password " + pass);
+                Log.d("Debug","★ Account Activity");
+
 
                 // Try to actually log in
+                new Server().testConnection();
                 new Server().testLogin(email, pass);
                 if (MainActivity.loggedIn) {
                     finish();

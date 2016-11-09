@@ -28,13 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ClueAnswerActivity" />
-        <activity android:name=".ClueFirstActivity"/>
-        <activity android:name=".ClueSecondActivity" />
-        <activity android:name=".ClueThirdActivity" />
         <activity android:name=".GameFirstActivity" />
-        <activity android:name=".GameSecondActivity" />
-        <activity android:name=".GameThirdActivity" />
-        <activity android:name=".GameSentAllActivity" />
         <activity android:name=".Account_Activity" />
         <activity android:name=".TestMatchActivity"
             android:parentActivityName=".MainActivity"/>

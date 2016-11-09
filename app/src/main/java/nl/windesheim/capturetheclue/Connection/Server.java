@@ -29,6 +29,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import nl.windesheim.capturetheclue.Account.User;
 import nl.windesheim.capturetheclue.Account_Activity;
@@ -49,6 +51,7 @@ public class Server {
     public void testConnection() { new JSONParser().execute(); }
 
     public void testLogin(String p, String w) {
+        Log.d("DEBUG","★ public void test Login");
         new DoLogin(p,w).execute();
     }
 
@@ -58,10 +61,12 @@ public class Server {
     }
 
     public static void setLoginCredentials(JSONObject user) {
+        Log.d("DEBUG","JSON DONT DO THIS ★ "+user.toString());
         try {
             if (user != null) {
                 Log.d("DUMP", user.getString("status"));
                 if (user.getString("status").contentEquals("OK")) {
+                    Log.d("DEBUG","USER!=NULL");
                     Log.d("DEBUG", user.getString("token"));
                     User u = new User(user.getString("username"), user.getString("token"));
                     u.setUserID(user.getString("id"));
@@ -94,7 +99,6 @@ public class Server {
     }
 
     public static void setResult(JSONObject j){
-
         try {
             MainActivity.tv.setText(j.getString("status"));
         } catch (JSONException e) {
@@ -133,6 +137,27 @@ public class Server {
 
     }
 
+//    public static String getQuery(List<Pair> params) throws UnsupportedEncodingException
+//    {
+//        StringBuilder result = new StringBuilder();
+//        boolean first = true;
+//
+//        for (Pair pair : params)
+//        {
+//            if (first)
+//                first = false;
+//            else
+//                result.append("&");
+//
+//            result.append(URLEncoder.encode(pair.first.toString(), "UTF-8"));
+//            result.append("=");
+//            result.append(URLEncoder.encode(pair.second.toString(), "UTF-8"));
+//        }
+//
+//        Log.d("DEBUG", "★ "+result.toString());
+//        return result.toString();
+//    }
+
     public static String getQuery(List<Pair> params) throws UnsupportedEncodingException
     {
         StringBuilder result = new StringBuilder();
@@ -145,11 +170,19 @@ public class Server {
             else
                 result.append("&");
 
+
             result.append(URLEncoder.encode(pair.first.toString(), "UTF-8"));
             result.append("=");
-            result.append(URLEncoder.encode(pair.second.toString(), "UTF-8"));
-        }
+            String login = URLEncoder.encode(pair.second.toString(), "UTF-8");
+            login = login.replace("%40","@");
+            Log.d("DEBUG","new > login before result.append(login) ★ "+login);
+            result.append(login);
 
+//            result.append(URLEncoder.encode(pair.first.toString(), "UTF-8"));
+//            result.append("=");
+//            result.append(URLEncoder.encode(pair.second.toString(), "UTF-8"));
+        }
+        Log.d("DEBUG", "this is real new ★ "+result.toString());
         return result.toString();
     }
 
